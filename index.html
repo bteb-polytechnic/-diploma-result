@@ -3,198 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BTEB Diploma Result BD | পলিটেকনিক ও ডিপ্লোমা রেজাল্ট</title>
+    <title>BTEB 7th Semester Result BD | পলিটেকনিক ও ডিপ্লোমা রেজাল্ট</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="খুব সহজেই আপনার রোল নম্বর দিয়ে কারিগরি শিক্ষা বোর্ডের (BTEB) পলিটেকনিক ও ডিপ্লোমা ইন ইঞ্জিনিয়ারিংয়ের রেজাল্ট দেখুন। Fast BTEB Diploma Result Hub BD.">
-    <meta name="keywords" content="bteb result, diploma result bd, polytechnic result, bteb result hub, fast diploma result, ডিপ্লোমা রেজাল্ট, পলিটেকনিক রেজাল্ট, কারিগরি শিক্ষা বোর্ড">
-    <meta name="author" content="BTEB Result Hub">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="রোল নম্বর দিয়ে কারিগরি শিক্ষা বোর্ডের (BTEB) ৭ম পর্বের (2016 Regulation) ডিপ্লোমা ইন ইঞ্জিনিয়ারিং রেজাল্ট দেখুন। Fast BTEB Polytechnic Result BD.">
+    <meta name="keywords" content="bteb result, diploma result bd, polytechnic result, 7th semester result, bteb result hub, fast diploma result">
     
-    <!-- Google Fonts for Bangla & English -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <!-- PDF.js Library for automatic PDF reading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Hind Siliguri', sans-serif;
-        }
-        body {
-            background: linear-gradient(135deg, #e0f2f1 0%, #e8f5e9 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .main-card {
-            background: #ffffff;
-            width: 100%;
-            max-width: 420px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 106, 78, 0.12);
-            overflow: hidden;
-            border-top: 6px solid #006a4e;
-        }
-        .header {
-            background-color: #f8f9fa;
-            padding: 22px 20px;
-            text-align: center;
-            border-bottom: 1px solid #eaeaea;
-        }
-        .badge-top {
-            background: #e8f5e9;
-            color: #006a4e;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-        .header h1 {
-            color: #006a4e;
-            font-size: 24px;
-            font-weight: 700;
-        }
-        .header p {
-            color: #555;
-            font-size: 14px;
-            margin-top: 4px;
-        }
-        .body-content {
-            padding: 25px 20px;
-        }
-        .input-group {
-            margin-bottom: 16px;
-        }
-        .input-group label {
-            display: block;
-            font-size: 15px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 13px 15px;
-            font-size: 17px;
-            border: 2px solid #dce1e5;
-            border-radius: 8px;
-            outline: none;
-            transition: all 0.3s;
-            text-align: center;
-            font-weight: 600;
-        }
-        .input-group input:focus {
-            border-color: #006a4e;
-            box-shadow: 0 0 8px rgba(0, 106, 78, 0.15);
-        }
-        .btn-search {
-            width: 100%;
-            background: #006a4e;
-            color: #ffffff;
-            border: none;
-            padding: 13px;
-            font-size: 17px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .btn-search:hover {
-            background: #004d38;
-        }
-        #resultContainer {
-            margin-top: 22px;
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .result-card {
-            border-radius: 10px;
-            padding: 18px;
-            background: #f8f9fa;
-            border: 1px solid #e0e0e0;
-        }
-        .result-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 9px 0;
-            border-bottom: 1px dashed #d5d5d5;
-            font-size: 15px;
-        }
-        .result-row:last-child {
-            border-bottom: none;
-        }
-        .result-label {
-            color: #555;
-            font-weight: 500;
-        }
-        .result-value {
-            color: #111;
-            font-weight: 700;
-            text-align: right;
-        }
-        .status-pass {
-            background: #d4edda;
-            color: #155724;
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        .status-fail {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        .error-box {
-            background: #fff3f3;
-            border-left: 4px solid #dc3545;
-            color: #c82333;
-            padding: 14px;
-            border-radius: 6px;
-            font-size: 14px;
-            text-align: center;
-            font-weight: 500;
-        }
-        .btn-print {
-            margin-top: 15px;
-            width: 100%;
-            background: #f1f3f5;
-            color: #333;
-            border: 1px solid #ccc;
-            padding: 9px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .btn-print:hover {
-            background: #e2e6ea;
-        }
-        .footer {
-            margin-top: 20px;
-            font-size: 13px;
-            color: #666;
-            text-align: center;
-        }
-        @media print {
-            .btn-search, .input-group, .btn-print, .footer {
-                display: none;
-            }
-            body { background: #fff; }
-            .main-card { box-shadow: none; border: 1px solid #000; }
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; }
+        body { background: linear-gradient(135deg, #e0f2f1 0%, #e8f5e9 100%); min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px; }
+        .main-card { background: #fff; width: 100%; max-width: 440px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 106, 78, 0.15); overflow: hidden; border-top: 6px solid #006a4e; }
+        .header { background: #f8f9fa; padding: 20px; text-align: center; border-bottom: 1px solid #eaeaea; }
+        .badge-top { background: #e8f5e9; color: #006a4e; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 6px; }
+        .header h1 { color: #006a4e; font-size: 23px; font-weight: 700; }
+        .header p { color: #555; font-size: 14px; margin-top: 2px; }
+        .body-content { padding: 22px 20px; }
+        #statusBanner { background: #fff8e1; color: #856404; padding: 10px; border-radius: 8px; font-size: 13px; text-align: center; margin-bottom: 15px; border: 1px solid #ffeeba; font-weight: 600; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 15px; font-weight: 600; color: #333; margin-bottom: 6px; }
+        .input-group input { width: 100%; padding: 12px; font-size: 18px; border: 2px solid #dce1e5; border-radius: 8px; outline: none; text-align: center; font-weight: 700; }
+        .input-group input:focus { border-color: #006a4e; }
+        .btn-search { width: 100%; background: #006a4e; color: #fff; border: none; padding: 13px; font-size: 17px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .btn-search:hover { background: #004d38; }
+        .btn-search:disabled { background: #95a5a6; cursor: not-allowed; }
+        #resultContainer { margin-top: 20px; display: none; }
+        .result-card { border-radius: 10px; padding: 16px; background: #f8f9fa; border: 1px solid #e0e0e0; }
+        .result-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #d5d5d5; font-size: 15px; }
+        .result-row:last-child { border-bottom: none; }
+        .result-label { color: #555; font-weight: 500; }
+        .result-value { color: #111; font-weight: 700; text-align: right; max-width: 65%; word-break: break-word; }
+        .status-pass { background: #d4edda; color: #155724; padding: 2px 10px; border-radius: 20px; font-size: 13px; }
+        .status-fail { background: #f8d7da; color: #721c24; padding: 2px 10px; border-radius: 20px; font-size: 13px; }
+        .gpa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #eee; }
+        .gpa-box { text-align: center; padding: 6px; background: #f1f8f5; border-radius: 6px; }
+        .gpa-box span { display: block; font-size: 12px; color: #666; }
+        .gpa-box strong { font-size: 16px; color: #006a4e; }
+        .error-box { background: #fff3f3; border-left: 4px solid #dc3545; color: #c82333; padding: 12px; border-radius: 6px; font-size: 14px; text-align: center; font-weight: 500; }
+        .btn-print { margin-top: 12px; width: 100%; background: #fff; color: #333; border: 1px solid #ccc; padding: 8px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer; }
+        .footer { margin-top: 18px; font-size: 12px; color: #666; text-align: center; }
+        @media print { .btn-search, .input-group, .btn-print, .footer, #statusBanner { display: none; } }
     </style>
 </head>
 <body>
@@ -203,15 +54,156 @@
     <div class="header">
         <span class="badge-top">বাংলাদেশ কারিগরি শিক্ষা বোর্ড</span>
         <h1>BTEB Diploma Result</h1>
-        <p>পলিটেকনিক ও ডিপ্লোমা ইন ইঞ্জিনিয়ারিং ফলাফল</p>
+        <p>৭ম পর্ব ফলাফল (২০১৬ প্রবিধান)</p>
     </div>
 
     <div class="body-content">
+        <div id="statusBanner">⏳ রেজাল্ট ডাটাবেজ প্রস্তুত হচ্ছে...</div>
+
         <div class="input-group">
             <label for="rollInput">আপনার বোর্ড রোল নম্বর (Roll Number):</label>
-            <input type="number" id="rollInput" placeholder="যেমন: 605421" onkeypress="handleEnter(event)">
+            <input type="number" id="rollInput" placeholder="যেমন: 101882 বা 101171" onkeypress="if(event.key==='Enter') searchResult()">
         </div>
-        <button class="btn-search" onclick="searchResult()">ফলাফল খুঁজুন</button>
+        <button class="btn-search" id="searchBtn" onclick="searchResult()">ফলাফল খুঁজুন</button>
 
         <div id="resultContainer"></div>
-  
+    </div>
+</div>
+
+<div class="footer">&copy; BTEB Diploma Result BD | সর্বস্বত্ব সংরক্ষিত</div>
+
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+    // প্রাথমিকভাবে পিডিএফ থেকে নেওয়া কিছু রোল দেওয়া থাকলো, বাকিগুলো পিডিএফ থেকে অটো লোড হবে
+    const resultsDB = {
+        "101171": { gpa7: "ref", gpa6: "3.46", gpa5: "3.41", gpa4: "3.30", ref_sub: "66771(T), 66773(T)" },
+        "101882": { gpa7: "3.27", gpa6: "3.51", gpa5: "3.11", gpa4: "3.09", ref_sub: "" },
+        "500897": { gpa7: "ref", gpa6: "2.69", gpa5: "2.59", gpa4: "2.67", ref_sub: "65853(T)" },
+        "101454": { gpa7: "Failed", gpa6: "-", gpa5: "-", gpa4: "-", ref_sub: "66945(T), 66962(T), 66963(T), 66971(T), 66972(T), 66973(T), 66975(T), 67045(T)" },
+        "501542": { gpa7: "3.75", gpa6: "3.47", gpa5: "3.48", gpa4: "2.77", ref_sub: "" },
+        "944285": { gpa7: "3.69", gpa6: "3.46", gpa5: "3.40", gpa4: "3.32", ref_sub: "" }
+    };
+
+    let pdfDoc = null;
+    const PDF_URL = 'RESULT_7th_2016_Regulation.pdf';
+
+    // স্বয়ংক্রিয়ভাবে গিটহাব ফোল্ডার থেকে PDF ফাইলটি লোড করার ফাংশন
+    async function initPDF() {
+        const banner = document.getElementById('statusBanner');
+        try {
+            pdfDoc = await pdfjsLib.getDocument(PDF_URL).promise;
+            banner.style.background = '#e8f5e9';
+            banner.style.color = '#006a4e';
+            banner.style.borderColor = '#c3e6cb';
+            banner.innerHTML = `✅ ২৮৩ পৃষ্ঠার সম্পূর্ণ রেজাল্ট ডাটাবেজ সংযুক্ত আছে!`;
+        } catch (err) {
+            banner.innerHTML = `⚠️ সম্পূর্ণ ফলাফলের জন্য গিটহাবে <b>RESULT_7th_2016_Regulation.pdf</b> ফাইলটি আপলোড করুন। (ডেমো রোল: 101882, 101171)`;
+        }
+    }
+    initPDF();
+
+    function parseStudentBlock(roll, rawBlock) {
+        const clean = rawBlock.replace(/\s+/g, ' ').trim();
+        const gpa7 = (clean.match(/gpa7:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
+        const gpa6 = (clean.match(/gpa6:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
+        const gpa5 = (clean.match(/gpa5:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
+        const gpa4 = (clean.match(/gpa4:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
+        
+        let ref_sub = "";
+        const refMatch = clean.match(/ref_sub:\s*([^})]+)/i);
+        if (refMatch) {
+            ref_sub = refMatch[1].trim();
+        } else if (!clean.includes("gpa7")) {
+            ref_sub = clean.replace(/[{}()]/g, '').trim();
+        }
+        return { gpa7, gpa6, gpa5, gpa4, ref_sub };
+    }
+
+    async function searchResult() {
+        const roll = document.getElementById("rollInput").value.trim();
+        const container = document.getElementById("resultContainer");
+        const btn = document.getElementById("searchBtn");
+        container.style.display = "block";
+
+        if (!roll || roll.length < 5) {
+            container.innerHTML = `<div class="error-box">সঠিক ৬ ডিজিটের বোর্ড রোল নম্বর লিখুন!</div>`;
+            return;
+        }
+
+        // ১. আগে মেমোরিতে খুঁজবে
+        if (resultsDB[roll]) {
+            renderResult(roll, resultsDB[roll]);
+            return;
+        }
+
+        // ২. মেমোরিতে না থাকলে সরাসরি PDF এর ২৮৩ পৃষ্ঠা স্ক্যান করে বের করবে
+        if (pdfDoc) {
+            btn.disabled = true;
+            for (let i = 1; i <= pdfDoc.numPages; i++) {
+                btn.innerText = `খোঁজা হচ্ছে... (পৃষ্ঠা ${i}/${pdfDoc.numPages})`;
+                const page = await pdfDoc.getPage(i);
+                const textContent = await page.getTextContent();
+                const pageText = textContent.items.map(item => item.str).join(' ');
+
+                if (pageText.includes(roll)) {
+                    const regex = new RegExp(roll + "\\s*[\\(\\{]([^\\)\\}]+)[\\)\\}]");
+                    const match = pageText.match(regex);
+                    if (match) {
+                        const parsed = parseStudentBlock(roll, match[1]);
+                        resultsDB[roll] = parsed;
+                        btn.disabled = false;
+                        btn.innerText = "ফলাফল খুঁজুন";
+                        renderResult(roll, parsed);
+                        return;
+                    }
+                }
+            }
+            btn.disabled = false;
+            btn.innerText = "ফলাফল খুঁজুন";
+        }
+
+        container.innerHTML = `<div class="error-box">দুঃখিত! রোল <strong>${roll}</strong> এর ফলাফল পাওয়া যায়নি।</div>`;
+    }
+
+    function renderResult(roll, data) {
+        const container = document.getElementById("resultContainer");
+        const isPassed = data.ref_sub === "" && data.gpa7 !== "ref" && data.gpa7 !== "Failed";
+        const statusClass = isPassed ? "status-pass" : "status-fail";
+        const statusText = isPassed ? "উত্তীর্ণ (Passed)" : "অকৃতকার্য (Referred)";
+
+        let html = `
+            <div class="result-card">
+                <div class="result-row">
+                    <span class="result-label">রোল নম্বর:</span>
+                    <span class="result-value">${roll}</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">ফলাফল স্ট্যাটাস:</span>
+                    <span class="result-value"><span class="${statusClass}">${statusText}</span></span>
+                </div>
+                
+                <div class="gpa-grid">
+                    <div class="gpa-box"><span>৭ম পর্ব (7th)</span><strong>${data.gpa7}</strong></div>
+                    <div class="gpa-box"><span>৬ষ্ঠ পর্ব (6th)</span><strong>${data.gpa6}</strong></div>
+                    <div class="gpa-box"><span>৫ম পর্ব (5th)</span><strong>${data.gpa5}</strong></div>
+                    <div class="gpa-box"><span>৪র্থ পর্ব (4th)</span><strong>${data.gpa4}</strong></div>
+                </div>
+        `;
+
+        if (!isPassed && data.ref_sub) {
+            html += `
+                <div class="result-row" style="margin-top: 10px;">
+                    <span class="result-label">রেফার্ড বিষয় (কোড):</span>
+                    <span class="result-value" style="color: #dc3545;">${data.ref_sub}</span>
+                </div>
+            `;
+        }
+
+        html += `<button class="btn-print" onclick="window.print()">🖨️ রেজাল্ট প্রিন্ট / PDF সেভ করুন</button></div>`;
+        container.innerHTML = html;
+    }
+</script>
+
+</body>
+</html>
