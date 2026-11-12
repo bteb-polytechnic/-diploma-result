@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTEB Diploma Result BD | পলিটেকনিক ও ডিপ্লোমা রেজাল্ট</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="খুব সহজেই আপনার রোল নম্বর দিয়ে কারিগরি শিক্ষা বোর্ডের (BTEB) পলিটেকনিক ও ডিপ্লোমা ইন ইঞ্জিনিয়ারিংয়ের রেজাল্ট দেখুন। Fast BTEB Diploma Result Hub BD.">
+    <meta name="keywords" content="bteb result, diploma result bd, polytechnic result, bteb result hub, fast diploma result, ডিপ্লোমা রেজাল্ট, পলিটেকনিক রেজাল্ট, কারিগরি শিক্ষা বোর্ড">
+    <meta name="author" content="BTEB Result Hub">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Google Fonts for Bangla & English -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #e0f2f1 0%, #e8f5e9 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .main-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 106, 78, 0.12);
+            overflow: hidden;
+            border-top: 6px solid #006a4e;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 22px 20px;
+            text-align: center;
+            border-bottom: 1px solid #eaeaea;
+        }
+        .badge-top {
+            background: #e8f5e9;
+            color: #006a4e;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .header h1 {
+            color: #006a4e;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .header p {
+            color: #555;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .body-content {
+            padding: 25px 20px;
+        }
+        .input-group {
+            margin-bottom: 16px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 13px 15px;
+            font-size: 17px;
+            border: 2px solid #dce1e5;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.3s;
+            text-align: center;
+            font-weight: 600;
+        }
+        .input-group input:focus {
+            border-color: #006a4e;
+            box-shadow: 0 0 8px rgba(0, 106, 78, 0.15);
+        }
+        .btn-search {
+            width: 100%;
+            background: #006a4e;
+            color: #ffffff;
+            border: none;
+            padding: 13px;
+            font-size: 17px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-search:hover {
+            background: #004d38;
+        }
+        #resultContainer {
+            margin-top: 22px;
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-card {
+            border-radius: 10px;
+            padding: 18px;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+        }
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px dashed #d5d5d5;
+            font-size: 15px;
+        }
+        .result-row:last-child {
+            border-bottom: none;
+        }
+        .result-label {
+            color: #555;
+            font-weight: 500;
+        }
+        .result-value {
+            color: #111;
+            font-weight: 700;
+            text-align: right;
+        }
+        .status-pass {
+            background: #d4edda;
+            color: #155724;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .status-fail {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .error-box {
+            background: #fff3f3;
+            border-left: 4px solid #dc3545;
+            color: #c82333;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .btn-print {
+            margin-top: 15px;
+            width: 100%;
+            background: #f1f3f5;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 9px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-print:hover {
+            background: #e2e6ea;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+        }
+        @media print {
+            .btn-search, .input-group, .btn-print, .footer {
+                display: none;
+            }
+            body { background: #fff; }
+            .main-card { box-shadow: none; border: 1px solid #000; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-card">
+    <div class="header">
+        <span class="badge-top">বাংলাদেশ কারিগরি শিক্ষা বোর্ড</span>
+        <h1>BTEB Diploma Result</h1>
+        <p>পলিটেকনিক ও ডিপ্লোমা ইন ইঞ্জিনিয়ারিং ফলাফল</p>
+    </div>
+
+    <div class="body-content">
+        <div class="input-group">
+            <label for="rollInput">আপনার বোর্ড রোল নম্বর (Roll Number):</label>
+            <input type="number" id="rollInput" placeholder="যেমন: 605421" onkeypress="handleEnter(event)">
+        </div>
+        <button class="btn-search" onclick="searchResult()">ফলাফল খুঁজুন</button>
+
+        <div id="resultContainer"></div>
+  
