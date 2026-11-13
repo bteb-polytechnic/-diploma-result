@@ -2,7 +2,7 @@
 // Navigation / index.html: network-first (always fresh after updates).
 // Data chunks, icons, manifest: cache-first (large, versioned by deploy).
 const CACHE = "bteb-rz-v1";
-const CORE = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
+const CORE = ["./", "./index.html", "./manifest.json", "./icon.svg"];
 
 self.addEventListener("install", function (event) {
     event.waitUntil(
@@ -40,7 +40,7 @@ self.addEventListener("fetch", function (event) {
     }
 
     // Static assets (data chunks, icons, manifest): cache first.
-    if (/\.(js|json|png|css)$/.test(url.pathname)) {
+    if (/\.(js|json|png|svg|css)$/.test(url.pathname)) {
         event.respondWith(
             caches.match(event.request).then(function (hit) {
                 if (hit) return hit;
