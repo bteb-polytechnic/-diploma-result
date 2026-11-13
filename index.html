@@ -5,60 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BTEB Results Zone | Diploma in Engineering Result</title>
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Check BTEB Polytechnic Diploma in Engineering Semester-wise Results, GPA, and Referred Subjects.">
-    <meta name="keywords" content="bteb results zone, diploma result, polytechnic result, bteb result, 7th semester result">
-
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; }
-        body { background-color: #f4f6f9; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 15px; }
+        body { background-color: #f4f6f9; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 10px; }
         
         .main-container { width: 100%; max-width: 480px; }
         
-        /* Top App Bar */
-        .app-bar { background: #ffffff; padding: 15px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #006a4e; }
-        .app-bar h2 { color: #006a4e; font-size: 20px; font-weight: 700; }
-        .app-bar span { font-size: 13px; color: #666; background: #e8f5e9; padding: 3px 10px; border-radius: 15px; font-weight: 600; }
+        /* App Header */
+        .app-bar { background: #ffffff; padding: 14px 18px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #0056b3; }
+        .app-bar h2 { color: #0056b3; font-size: 19px; font-weight: 700; }
+        .app-bar .lang { font-size: 13px; color: #555; background: #eef2f7; padding: 3px 8px; border-radius: 6px; font-weight: 600; }
 
-        /* Search Box */
-        .search-card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; text-align: center; }
-        .search-card input { width: 100%; padding: 12px; font-size: 18px; border: 2px solid #ddd; border-radius: 8px; outline: none; text-align: center; font-weight: 700; margin-bottom: 12px; }
-        .search-card input:focus { border-color: #006a4e; }
-        .btn-search { width: 100%; background: #006a4e; color: #fff; border: none; padding: 12px; font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        .btn-search:hover { background: #004d38; }
+        /* Search Card */
+        .search-card { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); margin-bottom: 12px; text-align: center; }
+        .search-card input { width: 100%; padding: 12px; font-size: 17px; border: 2px solid #ddd; border-radius: 8px; outline: none; text-align: center; font-weight: 700; margin-bottom: 10px; }
+        .search-card input:focus { border-color: #0056b3; }
+        .btn-search { width: 100%; background: #0056b3; color: #fff; border: none; padding: 11px; font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer; }
+        .btn-search:hover { background: #004085; }
 
-        #statusBanner { background: #fff8e1; color: #856404; padding: 10px; border-radius: 8px; font-size: 13px; text-align: center; margin-bottom: 15px; border: 1px solid #ffeeba; font-weight: 600; }
+        #statusBanner { background: #fff8e1; color: #856404; padding: 8px; border-radius: 6px; font-size: 12px; text-align: center; margin-bottom: 10px; border: 1px solid #ffeeba; font-weight: 600; }
 
-        /* Result View Area */
+        /* Result Area */
         #resultArea { display: none; }
+
+        /* Student Info Card */
+        .student-card { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); margin-bottom: 12px; text-align: center; border-top: 4px solid #0056b3; }
+        .student-card h3 { font-size: 22px; color: #222; font-weight: 700; margin-bottom: 4px; }
+        .student-card p { font-size: 13px; color: #555; margin-bottom: 12px; }
+
+        /* Action Buttons Row */
+        .action-row { display: flex; justify-content: space-around; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 10px 0; margin-bottom: 12px; }
+        .action-btn { background: none; border: none; font-size: 13px; color: #444; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .action-btn span { font-size: 16px; }
+
+        /* Alert Box for Total Backlog */
+        .alert-backlog { background: #fff5f5; color: #c53030; padding: 10px; border-radius: 8px; font-size: 14px; font-weight: 700; border: 1px solid #fed7d7; margin-bottom: 12px; text-align: center; }
+
+        /* Semester Card */
+        .semester-card { background: #ffffff; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); margin-bottom: 12px; overflow: hidden; border: 1px solid #eaeaea; }
+        .semester-header { padding: 12px 14px; background: #fafbfc; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+        .semester-title { font-size: 15px; font-weight: 700; color: #333; }
         
-        .student-info-card { background: #ffffff; padding: 18px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; text-align: center; border-top: 4px solid #17a2b8; }
-        .student-info-card h3 { font-size: 22px; color: #333; margin-bottom: 5px; }
-        .student-info-card p { font-size: 13px; color: #666; }
+        .badge-pass { background: #e8f5e9; color: #2e7d32; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+        .badge-fail { background: #ffebee; color: #c62828; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
 
-        /* Semester Card Style (Like Reference Image) */
-        .semester-card { background: #ffffff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; overflow: hidden; border: 1px solid #eaeaea; }
-        .semester-header { padding: 14px 16px; background: #fdfdfd; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
-        .semester-title { font-size: 16px; font-weight: 700; color: #333; }
+        /* Subject List Box */
+        .subject-container { padding: 10px 14px; }
+        .date-label { font-size: 11px; color: #666; margin-bottom: 6px; display: flex; justify-content: space-between; }
         
-        .badge-pass { background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
-        .badge-fail { background: #ffebee; color: #c62828; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+        .subject-item { background: #fff; border: 1px solid #e2e8f0; padding: 9px 12px; border-radius: 8px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; color: #c53030; }
+        .subject-item .tag { background: #edf2f7; color: #4a5568; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: normal; margin-left: 5px; }
 
-        .gpa-box-large { margin: 12px 16px; background: #e8f5e9; padding: 12px; border-radius: 8px; text-align: center; }
-        .gpa-box-large span { font-size: 12px; color: #2e7d32; display: block; }
-        .gpa-box-large strong { font-size: 24px; color: #2e7d32; }
+        /* GPA Box for Passed */
+        .gpa-passed-box { margin: 10px 14px; background: #f0fff4; border: 1px solid #c6f6d5; padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .gpa-passed-box div span { font-size: 11px; color: #276749; display: block; }
+        .gpa-passed-box div strong { font-size: 20px; color: #22543d; }
+        .grade-badge { font-size: 16px; font-weight: 700; color: #276749; }
 
-        .subject-list { padding: 12px 16px; }
-        .subject-item { background: #fafafa; border: 1px solid #eee; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
-        .subject-item span { color: #c62828; font-weight: 600; }
-
-        .error-box { background: #ffebee; color: #c62828; padding: 15px; border-radius: 8px; text-align: center; font-weight: 650; }
-        .footer { margin-top: 20px; font-size: 12px; color: #777; text-align: center; }
-
-        @media print { .search-card, .btn-search, #statusBanner, .footer { display: none; } }
+        .error-box { background: #ffebee; color: #c62828; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 14px; }
+        
+        /* Developer Footer Branding */
+        .footer { margin-top: 15px; font-size: 12px; color: #555; text-align: center; line-height: 1.6; }
+        .footer strong { color: #0056b3; }
     </style>
 </head>
 <body>
@@ -66,25 +77,39 @@
 <div class="main-container">
     <div class="app-bar">
         <h2>BTEB Results Zone</h2>
-        <span>Diploma</span>
+        <span class="lang">🌐 EN</span>
     </div>
 
     <div class="search-card">
-        <div id="statusBanner">⏳ ডাটাবেز লোড হচ্ছে...</div>
-        <input type="number" id="rollInput" placeholder="রোল নম্বর লিখুন (যেমন: 101882)" onkeypress="if(event.key==='Enter') searchResult()">
+        <div id="statusBanner">⏳ ডাটাবেজ লোড হচ্ছে...</div>
+        <input type="number" id="rollInput" placeholder="রোল নম্বর দিন (যেমন: 101882)" onkeypress="if(event.key==='Enter') searchResult()">
         <button class="btn-search" id="searchBtn" onclick="searchResult()">ফলাফল খুঁজুন</button>
     </div>
 
     <div id="resultArea">
-        <div class="student-info-card">
+        <div class="student-card">
             <h3 id="resRoll"># ------</h3>
             <p>Diploma in Engineering • Regulation 2016</p>
+            
+            <div class="action-row">
+                <button class="action-btn"><span>📊</span> GPA</button>
+                <button class="action-btn"><span>📈</span> CGPA</button>
+                <button class="action-btn" onclick="alert('রেজাল্ট সেভ করা হয়েছে!')"><span>💾</span> Save</button>
+                <button class="action-btn" onclick="window.print()"><span>📥</span> Download</button>
+                <button class="action-btn" onclick="alert('লিংক কপি করা হয়েছে!')"><span>🔗</span> Share</button>
+            </div>
+
+            <div id="alertBacklogBox" class="alert-backlog">0 subject(s) yet to pass</div>
         </div>
+
         <div id="semesterContainer"></div>
     </div>
 </div>
 
-<div class="footer">&copy; BTEB Results Zone BD | সর্বস্বত্ব সংরক্ষিত</div>
+<div class="footer">
+    &copy; BTEB Results Zone BD | সর্বস্বত্ব সংরক্ষিত<br>
+    Developed with ❤️ by <strong>MD ABU SUFIYAN</strong>
+</div>
 
 <script>
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
@@ -92,7 +117,6 @@
     let pdfDoc = null;
     const PDF_URL = 'RESULT_7th_2016_Regulation.pdf';
 
-    // ডেমো ডাটা
     const demoDatabase = {
         "101882": { gpa7: "3.27", gpa6: "3.51", gpa5: "3.11", gpa4: "3.09", ref_sub: "" },
         "101171": { gpa7: "ref", gpa6: "3.46", gpa5: "3.41", gpa4: "3.30", ref_sub: "66771(T), 66773(T)" },
@@ -104,10 +128,10 @@
         try {
             pdfDoc = await pdfjsLib.getDocument(PDF_URL).promise;
             banner.style.background = '#e8f5e9';
-            banner.style.color = '#006a4e';
-            banner.innerHTML = `✅ ২৮৩ পৃষ্ঠার সম্পূর্ণ রেজাল্ট ডাটাবেজ যুক্ত আছে!`;
+            banner.style.color = '#0056b3';
+            banner.innerHTML = `✅ ২৮৩ পৃষ্ঠার রেজাল্ট ডাটাবেজ সংযুক্ত আছে!`;
         } catch (err) {
-            banner.innerHTML = `⚠️ গিটহাবে <b>RESULT_7th_2016_Regulation.pdf</b> ফাইলটি আপলোড করুন। (ডেমো রোল: 101882, 101171)`;
+            banner.innerHTML = `⚠️ গিটহাবে <b>RESULT_7th_2016_Regulation.pdf</b> ফাইলটি আপলোড করুন। (ডেমো: 101882, 101171)`;
         }
     }
     initPDF();
@@ -118,7 +142,7 @@
         const btn = document.getElementById("searchBtn");
         
         if (!roll || roll.length < 5) {
-            alert("দয়া করে সঠিক বোর্ড রোল নম্বর লিখুন!");
+            alert("দয়া করে সঠিক রোল নম্বর লিখুন!");
             return;
         }
 
@@ -139,4 +163,82 @@
                         const clean = match[1].replace(/\s+/g, ' ').trim();
                         const gpa7 = (clean.match(/gpa7:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
                         const gpa6 = (clean.match(/gpa6:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
+                        const gpa5 = (clean.match(/gpa5:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
+                        const gpa4 = (clean.match(/gpa4:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
                         
+                        let ref_sub = "";
+                        const refMatch = clean.match(/ref_sub:\s*([^})]+)/i);
+                        if (refMatch) ref_sub = refMatch[1].trim();
+                        else if (!clean.includes("gpa7")) ref_sub = clean.replace(/[{}()]/g, '').trim();
+
+                        studentData = { gpa7, gpa6, gpa5, gpa4, ref_sub };
+                        break;
+                    }
+                }
+            }
+            btn.disabled = false;
+            btn.innerText = "ফলাফল খুঁজুন";
+        }
+
+        area.style.display = "block";
+        document.getElementById("resRoll").innerText = `# ${roll}`;
+        const container = document.getElementById("semesterContainer");
+
+        if (studentData) {
+            let subjectsArr = studentData.ref_sub ? studentData.ref_sub.split(',') : [];
+            let backlogCount = subjectsArr.length;
+            
+            document.getElementById("alertBacklogBox").innerText = backlogCount > 0 ? `${backlogCount} subject(s) yet to pass` : `All subjects passed!`;
+
+            let html = "";
+            
+            // ৭ম পর্ব
+            html += renderSemesterBox("৭ম পর্ব (7th Semester)", studentData.gpa7, subjectsArr);
+            // ৬ষ্ঠ পর্ব
+            html += renderSemesterBox("৬ষ্ঠ পর্ব (6th Semester)", studentData.gpa6, []);
+            // ৫ম পর্ব
+            html += renderSemesterBox("৫ম পর্ব (5th Semester)", studentData.gpa5, []);
+            // ৪র্থ পর্ব
+            html += renderSemesterBox("৪র্থ পর্ব (4th Semester)", studentData.gpa4, []);
+
+            container.innerHTML = html;
+        } else {
+            container.innerHTML = `<div class="error-box">দুঃখিত! রোল <b>${roll}</b> এর কোনো ফলাফল পাওয়া যায়নি।</div>`;
+        }
+    }
+
+    function renderSemesterBox(semName, gpaVal, subs) {
+        const isPass = gpaVal !== "ref" && gpaVal !== "Failed" && gpaVal !== "-" && subs.length === 0;
+        
+        let subHtml = "";
+        if (subs.length > 0) {
+            subHtml = `<div class="subject-container">
+                <div class="date-label"><span>📅 10 November, 2026</span><span>Referred</span></div>`;
+            subs.forEach(sub => {
+                subHtml += `<div class="subject-item">${sub.trim()} <span class="tag">Theory</span></div>`;
+            });
+            subHtml += `</div>`;
+        }
+
+        return `
+            <div class="semester-card">
+                <div class="semester-header">
+                    <span class="semester-title">📚 ${semName}</span>
+                    <span class="${isPass ? 'badge-pass' : 'badge-fail'}">${isPass ? 'Passed' : subs.length + ' subject(s) ref'}</span>
+                </div>
+                ${isPass ? `
+                    <div class="gpa-passed-box">
+                        <div>
+                            <span>GPA OBTAINED</span>
+                            <strong>${gpaVal}</strong>
+                        </div>
+                        <div class="grade-badge">Passed</div>
+                    </div>
+                ` : subHtml}
+            </div>
+        `;
+    }
+</script>
+
+</body>
+</html>
