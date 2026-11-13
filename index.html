@@ -35,6 +35,13 @@
     }
     </script>
 
+    <meta name="theme-color" content="#1e3a8a" id="themeColorMeta">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="BTEB Results">
+    <link rel="manifest" href="manifest.json">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -477,11 +484,291 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
+        /* Navbar icon buttons (dark mode, language, install) */
+        .nav-btn {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .nav-btn:hover {
+            background: #e2e8f0;
+        }
+
+        /* Recent searches */
+        .recent-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+            margin-top: 12px;
+        }
+        .recent-label {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #64748b;
+        }
+        .recent-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .recent-chip {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 4px 10px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+        }
+        .recent-chip:hover {
+            background: #e2e8f0;
+        }
+        .recent-clear {
+            background: none;
+            border: none;
+            color: #dc2626;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Statistics dashboard */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .stat-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+        .stat-box .stat-num {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .stat-box .stat-lbl {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        .stat-box.green .stat-num { color: #16a34a; }
+        .stat-box.amber .stat-num { color: #d97706; }
+        .stat-box.red .stat-num { color: #dc2626; }
+        .stat-box.blue .stat-num { color: #2563eb; }
+        .stat-sem-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin: 4px 0 8px;
+        }
+        .stat-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 12.5px;
+        }
+        .stat-bar-lbl {
+            width: 110px;
+            font-weight: 600;
+            color: #475569;
+            flex-shrink: 0;
+        }
+        .stat-bar-track {
+            flex: 1;
+            height: 10px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .stat-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #1e3a8a);
+            border-radius: 6px;
+        }
+        .stat-bar-val {
+            width: 46px;
+            text-align: right;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        /* Institute search */
+        .inst-select {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            color: #0f172a;
+            background: #ffffff;
+        }
+        .inst-row {
+            cursor: pointer;
+        }
+        .inst-row:hover {
+            background: #f8fafc;
+        }
+        .inst-note {
+            font-size: 12.5px;
+            color: #64748b;
+            font-weight: 500;
+            padding: 8px 2px;
+        }
+
+        /* Dark mode */
+        body.dark {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        body.dark .navbar {
+            background-color: #1e293b;
+            border-color: #334155;
+        }
+        body.dark .navbar-brand { color: #93c5fd; }
+        body.dark .navbar-right { color: #cbd5e1; }
+        body.dark .nav-btn {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+        body.dark .nav-btn:hover { background: #475569; }
+        body.dark .search-box-card,
+        body.dark #resultWrapper,
+        body.dark .sem-card,
+        body.dark .footer,
+        body.dark .sheet-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.dark .status-bar {
+            background: #0f172a;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        body.dark .status-bar.loaded {
+            background: #052e16;
+            border-color: #14532d;
+            color: #86efac;
+        }
+        body.dark .search-input-group input,
+        body.dark .calc-grid input,
+        body.dark .inst-select {
+            background: #0f172a;
+            border-color: #475569;
+            color: #f1f5f9;
+        }
+        body.dark .roll-title,
+        body.dark .sem-name,
+        body.dark .gpa-green-box .grd,
+        body.dark .stat-box .stat-num,
+        body.dark .stat-bar-val {
+            color: #f1f5f9;
+        }
+        body.dark .meta-line,
+        body.dark .inst-line,
+        body.dark .calc-grid label,
+        body.dark .recent-label,
+        body.dark .stat-box .stat-lbl,
+        body.dark .stat-bar-lbl,
+        body.dark .stat-sem-title,
+        body.dark .inst-note,
+        body.dark .footer p {
+            color: #94a3b8;
+        }
+        body.dark .pill-btn {
+            background: #1e293b;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+        body.dark .pill-btn:hover {
+            background: #334155;
+            border-color: #64748b;
+        }
+        body.dark .summary-banner.pass {
+            background-color: #052e16;
+            border-color: #14532d;
+            color: #86efac;
+        }
+        body.dark .summary-banner.fail {
+            background-color: #4c0519;
+            border-color: #881337;
+            color: #fda4af;
+        }
+        body.dark .sem-card-header { border-color: #334155; }
+        body.dark .sem-status-pass { color: #4ade80; }
+        body.dark .sem-status-fail { color: #f87171; }
+        body.dark .exam-date-row { color: #60a5fa; }
+        body.dark .badge-promoted {
+            background: #052e16;
+            color: #4ade80;
+            border-color: #14532d;
+        }
+        body.dark .badge-time {
+            background: #334155;
+            color: #cbd5e1;
+        }
+        body.dark .gpa-green-box { background-color: #052e16; }
+        body.dark .gpa-green-box .lbl { color: #a7f3d0; }
+        body.dark .gpa-green-box .val { color: #4ade80; }
+        body.dark .ref-list-box { border-color: #334155; }
+        body.dark .ref-item { border-color: #334155; }
+        body.dark .sub-code { color: #c4b5fd; }
+        body.dark .sub-title { color: #fda4af; }
+        body.dark .sub-pill {
+            background: #0f172a;
+            border-color: #475569;
+            color: #cbd5e1;
+        }
+        body.dark .footer .creator { color: #93c5fd; }
+        body.dark .recent-chip {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+        body.dark .recent-chip:hover { background: #475569; }
+        body.dark .recent-clear { color: #f87171; }
+        body.dark .stat-box {
+            background: #0f172a;
+            border-color: #334155;
+        }
+        body.dark .stat-box.green .stat-num { color: #4ade80; }
+        body.dark .stat-box.amber .stat-num { color: #fbbf24; }
+        body.dark .stat-box.red .stat-num { color: #f87171; }
+        body.dark .stat-box.blue .stat-num { color: #60a5fa; }
+        body.dark .stat-bar-track { background: #334155; }
+        body.dark .stat-bar-fill { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        body.dark .inst-row:hover { background: #0f172a; }
+        body.dark .sheet-overlay { background: rgba(0, 0, 0, 0.7); }
+
         @media print {
             .navbar, .search-box-card, .action-pills, .dev-top-badge {
                 display: none !important;
             }
             body { background: #fff; }
+            body.dark { background: #fff !important; color: #1e293b !important; }
+            body.dark #resultWrapper, body.dark .sem-card, body.dark .sheet-card, body.dark .gpa-green-box {
+                background: #fff !important;
+            }
+            body.dark .roll-title, body.dark .sem-name, body.dark .meta-line, body.dark .inst-line,
+            body.dark .gpa-green-box .grd, body.dark .gpa-green-box .lbl {
+                color: #1e293b !important;
+            }
             #resultWrapper { box-shadow: none; border: none; }
             .sheet-actions { display: none !important; }
             body.printing-sheet .container, body.printing-sheet .navbar {
@@ -507,15 +794,16 @@
     <div class="navbar">
         <div class="navbar-brand">BTEB Results Zone</div>
         <div class="navbar-right">
-            <span>文A EN</span>
-            <span>☰</span>
+            <button class="nav-btn" id="installBtn" onclick="installApp()" style="display:none" data-i18n="installBtn">📲 Install</button>
+            <button class="nav-btn" id="langBtn" onclick="toggleLang()">বাং</button>
+            <button class="nav-btn" id="darkBtn" onclick="toggleDark()">🌙</button>
         </div>
     </div>
 
     <div class="container">
         <!-- Creator Credit Banner -->
         <div class="dev-top-badge">
-            Official Result Portal • Created by <strong>MD ABU SUFIYAN</strong>
+            <span data-i18n="officialPortal">Official Result Portal • Created by</span> <strong>MD ABU SUFIYAN</strong>
         </div>
 
         <!-- Search Input Section -->
@@ -524,8 +812,13 @@
                 <span id="statusText">⏳ Loading 1,60,657 results...</span>
             </div>
             <div class="search-input-group">
-                <input type="number" id="rollInput" placeholder="Enter Roll No (e.g. 700014, 800377)" onkeypress="if(event.key==='Enter') searchRoll()">
-                <button class="btn-search" id="searchBtn" onclick="searchRoll()">Search</button>
+                <input type="number" id="rollInput" placeholder="Enter Roll No (e.g. 700014, 800377)" data-i18n-placeholder="searchPlaceholder" onkeypress="if(event.key==='Enter') searchRoll()">
+                <button class="btn-search" id="searchBtn" onclick="searchRoll()" data-i18n="searchBtn">Search</button>
+            </div>
+            <div id="recentRow" class="recent-row" style="display:none">
+                <span class="recent-label" data-i18n="recentLabel">Recent:</span>
+                <span id="recentChips" class="recent-chips"></span>
+                <button class="recent-clear" onclick="clearRecent()" data-i18n="clearBtn">Clear</button>
             </div>
         </div>
 
@@ -544,11 +837,12 @@
             <div class="action-pills">
                 <button class="pill-btn" onclick="showCGPA()">🧮 GPA</button>
                 <button class="pill-btn" onclick="showCGPA()">📊 CGPA</button>
-                <button class="pill-btn" onclick="alert('Result saved to browser!')">🤍 Save</button>
-                <button class="pill-btn" onclick="window.print()">⬇️ Download</button>
-                <button class="pill-btn" onclick="shareResult()">🔗 Share</button>
-                <button class="pill-btn" id="copyBtn" onclick="copyResult()">📋 Copy</button>
-                <button class="pill-btn" onclick="openGradeSheet()">📄 Grade Sheet</button>
+                <button class="pill-btn" onclick="alert('Result saved to browser!')" data-i18n="saveBtn">🤍 Save</button>
+                <button class="pill-btn" onclick="window.print()" data-i18n="downloadBtn">⬇️ Download</button>
+                <button class="pill-btn" onclick="shareResult()" data-i18n="shareBtn">🔗 Share</button>
+                <button class="pill-btn" id="copyBtn" onclick="copyResult()" data-i18n="copyBtn">📋 Copy</button>
+                <button class="pill-btn" onclick="shareResultImage()" data-i18n="shareImageBtn">🖼️ Share Image</button>
+                <button class="pill-btn" onclick="openGradeSheet()" data-i18n="gradeSheetBtn">📄 Grade Sheet</button>
             </div>
 
             <!-- Total Referred / Pass Status Box -->
@@ -563,24 +857,24 @@
         <!-- CGPA Calculator -->
         <div class="sem-card" id="cgpaCalculator" style="margin-top: 14px;">
             <div class="sem-card-header">
-                <div class="sem-name">🧮 CGPA Calculator</div>
+                <div class="sem-name" data-i18n="calcTitle">🧮 CGPA Calculator</div>
             </div>
             <div class="sem-card-body">
-                <div class="exam-date-row"><span>Enter your semester GPAs (0 – 4.00). Leave blank for semesters not completed.</span></div>
+                <div class="exam-date-row"><span data-i18n="calcHint">Enter your semester GPAs (0 – 4.00). Leave blank for semesters not completed.</span></div>
                 <div class="calc-grid">
-                    <div><label>1st Semester</label><input type="number" class="calc-gpa" data-sem="1" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
-                    <div><label>2nd Semester</label><input type="number" class="calc-gpa" data-sem="2" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
-                    <div><label>3rd Semester</label><input type="number" class="calc-gpa" data-sem="3" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
-                    <div><label>4th Semester</label><input type="number" class="calc-gpa" data-sem="4" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
-                    <div><label>5th Semester</label><input type="number" class="calc-gpa" data-sem="5" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
-                    <div><label>6th Semester</label><input type="number" class="calc-gpa" data-sem="6" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
-                    <div><label>7th Semester</label><input type="number" class="calc-gpa" data-sem="7" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
-                    <div><label>8th Semester</label><input type="number" class="calc-gpa" data-sem="8" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label data-i18n="sem1">1st Semester</label><input type="number" class="calc-gpa" data-sem="1" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label data-i18n="sem2">2nd Semester</label><input type="number" class="calc-gpa" data-sem="2" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label data-i18n="sem3">3rd Semester</label><input type="number" class="calc-gpa" data-sem="3" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label data-i18n="sem4">4th Semester</label><input type="number" class="calc-gpa" data-sem="4" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label data-i18n="sem5">5th Semester</label><input type="number" class="calc-gpa" data-sem="5" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label data-i18n="sem6">6th Semester</label><input type="number" class="calc-gpa" data-sem="6" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label data-i18n="sem7">7th Semester</label><input type="number" class="calc-gpa" data-sem="7" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label data-i18n="sem8">8th Semester</label><input type="number" class="calc-gpa" data-sem="8" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
                 </div>
                 <div class="action-pills" style="margin: 0 0 12px;">
-                    <button class="pill-btn" onclick="calcCGPA()">🧮 Calculate CGPA</button>
-                    <button class="pill-btn" onclick="fillCalcFromSearch()">↩️ Use Searched Result</button>
-                    <button class="pill-btn" onclick="clearCalc()">✕ Clear</button>
+                    <button class="pill-btn" onclick="calcCGPA()" data-i18n="calcCalculate">🧮 Calculate CGPA</button>
+                    <button class="pill-btn" onclick="fillCalcFromSearch()" data-i18n="calcUseSearch">↩️ Use Searched Result</button>
+                    <button class="pill-btn" onclick="clearCalc()" data-i18n="calcClear">✕ Clear</button>
                 </div>
                 <div id="calcResult" style="display:none"></div>
             </div>
@@ -589,7 +883,7 @@
         <!-- Grade Scale -->
         <div class="sem-card" id="gradeScale" style="margin-top: 14px;">
             <div class="sem-card-header">
-                <div class="sem-name">📊 Grade Scale</div>
+                <div class="sem-name" data-i18n="scaleTitle">📊 Grade Scale</div>
             </div>
             <div class="sem-card-body">
                 <div class="ref-list-box">
@@ -602,14 +896,52 @@
                     <div class="ref-item"><span class="sub-code">2.50 – 2.74</span><span class="sub-pill">C+</span></div>
                     <div class="ref-item"><span class="sub-code">2.25 – 2.49</span><span class="sub-pill">C</span></div>
                     <div class="ref-item"><span class="sub-code">2.00 – 2.24</span><span class="sub-pill">D</span></div>
-                    <div class="ref-item"><span class="sub-code">0.00 – 1.99</span><span class="sub-pill">F</span><span class="sub-pill">Fail</span></div>
+                    <div class="ref-item"><span class="sub-code">0.00 – 1.99</span><span class="sub-pill">F</span><span class="sub-pill" data-i18n="failPill">Fail</span></div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Result Statistics -->
+        <div class="sem-card" id="statsSection" style="margin-top: 14px;">
+            <div class="sem-card-header">
+                <div class="sem-name" data-i18n="statsTitle">📊 Result Statistics</div>
+            </div>
+            <div class="sem-card-body">
+                <div id="statsContent"></div>
+            </div>
+        </div>
+
+        <!-- Institute Results -->
+        <div class="sem-card" id="instSection" style="margin-top: 14px;">
+            <div class="sem-card-header">
+                <div class="sem-name" data-i18n="instTitle">🏫 Institute Results</div>
+            </div>
+            <div class="sem-card-body">
+                <div class="search-input-group" style="margin-bottom: 8px;">
+                    <input type="text" id="instInput" list="instList" placeholder="Type institute name..." data-i18n-placeholder="instPlaceholder" onkeypress="if(event.key==='Enter') instSearch()">
+                    <datalist id="instList"></datalist>
+                    <button class="btn-search" onclick="instSearch()" data-i18n="instView">View Results</button>
+                </div>
+                <div class="search-input-group">
+                    <select id="instSem" class="inst-select">
+                        <option value="0" data-i18n="instAllSem">All Semesters</option>
+                        <option value="1" data-i18n="sem1">1st Semester</option>
+                        <option value="2" data-i18n="sem2">2nd Semester</option>
+                        <option value="3" data-i18n="sem3">3rd Semester</option>
+                        <option value="4" data-i18n="sem4">4th Semester</option>
+                        <option value="5" data-i18n="sem5">5th Semester</option>
+                        <option value="6" data-i18n="sem6">6th Semester</option>
+                        <option value="7" data-i18n="sem7">7th Semester</option>
+                        <option value="8" data-i18n="sem8">8th Semester</option>
+                    </select>
+                </div>
+                <div id="instResults" style="margin-top: 12px;"></div>
             </div>
         </div>
 
         <!-- Footer with Creator Name -->
         <div class="footer">
-            <p>&copy; 2026 BTEB Results Zone | Bangladesh Technical Education Board</p>
+            <p data-i18n="footerText">&copy; 2026 BTEB Results Zone | Bangladesh Technical Education Board</p>
             <div class="creator">Designed & Developed by MD ABU SUFIYAN</div>
         </div>
     </div>
@@ -619,8 +951,8 @@
         <div class="sheet-card">
             <div id="gradeSheetContent"></div>
             <div class="action-pills sheet-actions" style="margin-top: 16px;">
-                <button class="pill-btn" onclick="printGradeSheet()">🖨️ Print</button>
-                <button class="pill-btn" onclick="closeGradeSheet()">✕ Close</button>
+                <button class="pill-btn" onclick="printGradeSheet()" data-i18n="printBtn">🖨️ Print</button>
+                <button class="pill-btn" onclick="closeGradeSheet()" data-i18n="closeBtn">✕ Close</button>
             </div>
         </div>
     </div>
@@ -731,7 +1063,195 @@
 
     let currentResults = []; // [{roll, rec}] currently displayed
 
+    // ---------- Language (English / Bangla) + safe storage ----------
+    function storeGet(key) {
+        try { return window.localStorage.getItem(key); } catch (e) { return null; }
+    }
+    function storeSet(key, val) {
+        try { window.localStorage.setItem(key, val); } catch (e) { /* storage unavailable */ }
+    }
+
+    const I18N = {
+        en: {
+            officialPortal: "Official Result Portal • Created by",
+            searchPlaceholder: "Enter Roll No (e.g. 700014, 800377)",
+            searchBtn: "Search",
+            recentLabel: "Recent:",
+            clearBtn: "Clear",
+            installBtn: "📲 Install",
+            calcTitle: "🧮 CGPA Calculator",
+            calcHint: "Enter your semester GPAs (0 – 4.00). Leave blank for semesters not completed.",
+            sem1: "1st Semester", sem2: "2nd Semester", sem3: "3rd Semester", sem4: "4th Semester",
+            sem5: "5th Semester", sem6: "6th Semester", sem7: "7th Semester", sem8: "8th Semester",
+            calcCalculate: "🧮 Calculate CGPA",
+            calcUseSearch: "↩️ Use Searched Result",
+            calcClear: "✕ Clear",
+            scaleTitle: "📊 Grade Scale",
+            failPill: "Fail",
+            footerText: "© 2026 BTEB Results Zone | Bangladesh Technical Education Board",
+            statsTitle: "📊 Result Statistics",
+            statsTotal: "Total Results",
+            statsPassed: "Passed",
+            statsReferred: "Referred",
+            statsFailed: "Failed",
+            statsExpelled: "Expelled",
+            statsPassRate: "Pass Rate",
+            statsBySem: "By Semester",
+            instTitle: "🏫 Institute Results",
+            instPlaceholder: "Type institute name...",
+            instAllSem: "All Semesters",
+            instView: "View Results",
+            instSelectFirst: "Please select an institute first.",
+            instNotFound: "No institute found with this name.",
+            instNoResults: "No results found for this institute.",
+            instStudents: "students",
+            instShowing: "Showing {n} of {total} students",
+            saveBtn: "🤍 Save",
+            downloadBtn: "⬇️ Download",
+            shareBtn: "🔗 Share",
+            copyBtn: "📋 Copy",
+            gradeSheetBtn: "📄 Grade Sheet",
+            shareImageBtn: "🖼️ Share Image",
+            printBtn: "🖨️ Print",
+            closeBtn: "✕ Close",
+            copied: "✅ Copied!",
+            searchFirst: "Please search a roll number first.",
+            enterRoll: "Please enter a roll number.",
+            rollNotFound: "Roll {roll} not found in the updated results (Exam Aug-Sep 2026, published 10 Nov 2026).\nPlease check the roll number and try again.",
+            validGpa: "Please enter a valid GPA between 0 and 4.00.",
+            enterOneGpa: "Please enter at least one semester GPA.",
+            exam: "Exam",
+            published: "Published",
+            semGpa: "Semester GPA",
+            grade: "Grade",
+            passed: "Passed",
+            referred: "Referred",
+            failed: "Failed",
+            expelled: "Expelled",
+            promoted: "Promoted",
+            notPromoted: "Not Promoted",
+            regulation: "Regulation",
+            passedAll: "✅ Passed — All subjects cleared",
+            yetToPass: "{n} subject(s) yet to pass",
+            gradeSheet: "Grade Sheet",
+            cgpaOfficial: "CGPA (as published by BTEB)",
+            cgpaAverage: "CGPA (average of passed semesters)",
+            cgpaSemesters: "CGPA ({n} semesters)",
+            resultsLoaded: "✅ {total} results loaded • Exam Aug-Sep 2026 • Published 10 Nov 2026",
+            imageFailed: "Image could not be created on this browser."
+        },
+        bn: {
+            officialPortal: "অফিসিয়াল রেজাল্ট পোর্টাল • তৈরি করেছেন",
+            searchPlaceholder: "রোল নম্বর দিন (যেমন 700014, 800377)",
+            searchBtn: "খুঁজুন",
+            recentLabel: "সাম্প্রতিক:",
+            clearBtn: "মুছুন",
+            installBtn: "📲 ইনস্টল",
+            calcTitle: "🧮 সিজিপিএ ক্যালকুলেটর",
+            calcHint: "আপনার সেমিস্টারের GPA লিখুন (০ – ৪.০০)। অসম্পূর্ণ সেমিস্টার খালি রাখুন।",
+            sem1: "১ম সেমিস্টার", sem2: "২য় সেমিস্টার", sem3: "৩য় সেমিস্টার", sem4: "৪র্থ সেমিস্টার",
+            sem5: "৫ম সেমিস্টার", sem6: "৬ষ্ঠ সেমিস্টার", sem7: "৭ম সেমিস্টার", sem8: "৮ম সেমিস্টার",
+            calcCalculate: "🧮 সিজিপিএ হিসাব করুন",
+            calcUseSearch: "↩️ সার্চ করা রেজাল্ট ব্যবহার করুন",
+            calcClear: "✕ মুছুন",
+            scaleTitle: "📊 গ্রেড স্কেল",
+            failPill: "ফেল",
+            footerText: "© ২০২৬ BTEB Results Zone | বাংলাদেশ কারিগরি শিক্ষা বোর্ড",
+            statsTitle: "📊 রেজাল্ট পরিসংখ্যান",
+            statsTotal: "মোট রেজাল্ট",
+            statsPassed: "পাস",
+            statsReferred: "রেফার্ড",
+            statsFailed: "ফেল",
+            statsExpelled: "বহিষ্কার",
+            statsPassRate: "পাসের হার",
+            statsBySem: "সেমিস্টার অনুযায়ী",
+            instTitle: "🏫 ইনস্টিটিউটের রেজাল্ট",
+            instPlaceholder: "ইনস্টিটিউটের নাম লিখুন...",
+            instAllSem: "সব সেমিস্টার",
+            instView: "রেজাল্ট দেখুন",
+            instSelectFirst: "প্রথমে একটি ইনস্টিটিউট বেছে নিন।",
+            instNotFound: "এই নামে কোনো ইনস্টিটিউট পাওয়া যায়নি।",
+            instNoResults: "এই ইনস্টিটিউটের কোনো রেজাল্ট পাওয়া যায়নি।",
+            instStudents: "জন শিক্ষার্থী",
+            instShowing: "{total} জনের মধ্যে {n} জন দেখানো হচ্ছে",
+            saveBtn: "🤍 সংরক্ষণ",
+            downloadBtn: "⬇️ ডাউনলোড",
+            shareBtn: "🔗 শেয়ার",
+            copyBtn: "📋 কপি",
+            gradeSheetBtn: "📄 গ্রেড শিট",
+            shareImageBtn: "🖼️ ছবি শেয়ার",
+            printBtn: "🖨️ প্রিন্ট",
+            closeBtn: "✕ বন্ধ করুন",
+            copied: "✅ কপি হয়েছে!",
+            searchFirst: "প্রথমে একটি রোল নম্বর খুঁজুন।",
+            enterRoll: "রোল নম্বর দিন।",
+            rollNotFound: "রোল {roll} পাওয়া যায়নি (পরীক্ষা Aug-Sep 2026, প্রকাশিত 10 Nov 2026)।\nরোল নম্বরটি ঠিক আছে কিনা দেখুন।",
+            validGpa: "সঠিক GPA দিন (০ থেকে ৪.০০ এর মধ্যে)।",
+            enterOneGpa: "কমপক্ষে একটি সেমিস্টারের GPA দিন।",
+            exam: "পরীক্ষা",
+            published: "প্রকাশিত",
+            semGpa: "সেমিস্টার GPA",
+            grade: "গ্রেড",
+            passed: "পাস",
+            referred: "রেফার্ড",
+            failed: "ফেল",
+            expelled: "বহিষ্কার",
+            promoted: "প্রমোটেড",
+            notPromoted: "প্রমোটেড নয়",
+            regulation: "রেগুলেশন",
+            passedAll: "✅ পাস — সব বিষয়ে পাস",
+            yetToPass: "{n}টি বিষয়ে এখনো পাস করতে হবে",
+            gradeSheet: "গ্রেড শিট",
+            cgpaOfficial: "সিজিপিএ (BTEB কর্তৃক প্রকাশিত)",
+            cgpaAverage: "সিজিপিএ (পাস করা সেমিস্টারের গড়)",
+            cgpaSemesters: "সিজিপিএ ({n}টি সেমিস্টার)",
+            resultsLoaded: "✅ {total}টি রেজাল্ট লোড হয়েছে • পরীক্ষা Aug-Sep 2026 • প্রকাশিত 10 Nov 2026",
+            imageFailed: "এই ব্রাউজারে ছবি তৈরি করা যাচ্ছে না।"
+        }
+    };
+    let LANG = "en";
+    function t(key, params) {
+        let s = (I18N[LANG] && I18N[LANG][key]) || I18N.en[key] || key;
+        if (params) {
+            Object.keys(params).forEach(function (k) { s = s.split("{" + k + "}").join(params[k]); });
+        }
+        return s;
+    }
+    function updateStatusText() {
+        const statusText = document.getElementById("statusText");
+        if (!statusText) return;
+        const total = (typeof RESULT_META !== "undefined" && RESULT_META.total)
+            ? RESULT_META.total.toLocaleString("en-IN") : Object.keys(RESULT_DB).length.toLocaleString("en-IN");
+        statusText.textContent = t("resultsLoaded", { total: total });
+    }
+    function applyLang(lang) {
+        LANG = (lang === "bn") ? "bn" : "en";
+        storeSet("bteb_lang", LANG);
+        document.documentElement.lang = LANG;
+        document.querySelectorAll("[data-i18n]").forEach(function (el) { el.textContent = t(el.getAttribute("data-i18n")); });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) { el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder"))); });
+        const lb = document.getElementById("langBtn");
+        if (lb) lb.textContent = (LANG === "bn") ? "EN" : "বাং";
+        updateStatusText();
+        renderRecent();
+        if (document.getElementById("statsContent") && document.getElementById("statsContent").innerHTML) renderStats();
+        if (lastInstQuery) instSearch();
+        const cb = document.getElementById("calcResult");
+        if (cb && cb.style.display === "block") calcCGPA();
+        if (currentResults.length) {
+            const r = currentResults[0];
+            showResults(r.roll, currentResults.map(function (c) { return c.rec; }), true);
+        }
+        const ov = document.getElementById("gradeSheetOverlay");
+        if (ov && ov.classList.contains("open") && currentResults.length) openGradeSheet();
+    }
+    function toggleLang() { applyLang(LANG === "bn" ? "en" : "bn"); }
+
+    const BN_ORDINAL = { 1: "১ম", 2: "২য়", 3: "৩য়", 4: "৪র্থ", 5: "৫ম", 6: "৬ষ্ঠ", 7: "৭ম", 8: "৮ম" };
     function semLabel(sem) {
+        if (LANG === "bn") {
+            return sem === 8 ? "৮ম সেমিস্টার (অনিয়মিত)" : BN_ORDINAL[sem] + " সেমিস্টার";
+        }
         return sem === 8 ? "8th Semester (Irregular)" : ORDINAL[sem] + " Semester";
     }
 
@@ -818,35 +1338,35 @@
         const isCgpaOnly = isCurrent && !gpa && rec.cgpa && !rec.ref_sub.length && !rec.failed.length && !rec.expelled.length;
         const hasFailedList = isCurrent && rec.failed.length > 0;
         const statusCls = ((isPass || isCgpaOnly) && !hasFailedList && !isExpelled) ? "sem-status-pass" : "sem-status-fail";
-        const statusTxt = isExpelled ? "✕ Expelled" : (hasFailedList ? "✕ Failed" : ((isPass || isCgpaOnly) ? "✓ Passed" : "✕ Referred"));
+        const statusTxt = isExpelled ? "✕ " + t("expelled") : (hasFailedList ? "✕ " + t("failed") : ((isPass || isCgpaOnly) ? "✓ " + t("passed") : "✕ " + t("referred")));
         const badge = (hasFailedList || isExpelled)
-            ? '<span class="badge-time">Not Promoted</span>'
-            : ((isPass || isCgpaOnly) ? '<span class="badge-promoted">✓ Passed</span>' : '<span class="badge-promoted">Promoted</span>');
+            ? '<span class="badge-time">' + t("notPromoted") + '</span>'
+            : ((isPass || isCgpaOnly) ? '<span class="badge-promoted">✓ ' + t("passed") + '</span>' : '<span class="badge-promoted">' + t("promoted") + '</span>');
 
         let html = '<div class="sem-card"><div class="sem-card-header">'
             + '<div class="sem-name">📘 ' + semLabel(sem) + '</div>'
             + '<div class="' + statusCls + '">' + statusTxt + '</div></div>'
             + '<div class="sem-card-body">'
-            + '<div class="exam-date-row"><span>📅 Exam: ' + esc(rec.exam || EXAM_LABEL) + '</span>'
+            + '<div class="exam-date-row"><span>📅 ' + t("exam") + ': ' + esc(rec.exam || EXAM_LABEL) + '</span>'
             + '<span class="exam-badges">' + badge
-            + '<span class="badge-time"><span class="dot-green"></span>Published</span></span></div>';
+            + '<span class="badge-time"><span class="dot-green"></span>' + t("published") + '</span></span></div>';
 
         if (isPass) {
-            html += '<div class="gpa-green-box"><div><div class="lbl">Semester GPA</div>'
-                + '<div class="grd">Grade: ' + gradeOf(gpa) + '</div></div>'
+            html += '<div class="gpa-green-box"><div><div class="lbl">' + t("semGpa") + '</div>'
+                + '<div class="grd">' + t("grade") + ': ' + gradeOf(gpa) + '</div></div>'
                 + '<div class="val">' + esc(gpa) + '</div></div>';
         } else if (isCgpaOnly) {
             html += '<div class="gpa-green-box"><div><div class="lbl">CGPA</div>'
-                + '<div class="grd">Grade: ' + gradeOf(rec.cgpa) + '</div></div>'
+                + '<div class="grd">' + t("grade") + ': ' + gradeOf(rec.cgpa) + '</div></div>'
                 + '<div class="val">' + esc(rec.cgpa) + '</div></div>';
         }
 
         // Referred / failed / expelled subjects belong to the current semester card
         if (isCurrent) {
             const lists = [];
-            if (rec.ref_sub.length) lists.push({ items: rec.ref_sub, pill: "Referred" });
-            if (rec.failed.length) lists.push({ items: rec.failed, pill: "Failed" });
-            if (rec.expelled.length) lists.push({ items: rec.expelled.map(function (c) { return c + "(T)"; }), pill: "Expelled" });
+            if (rec.ref_sub.length) lists.push({ items: rec.ref_sub, pill: t("referred") });
+            if (rec.failed.length) lists.push({ items: rec.failed, pill: t("failed") });
+            if (rec.expelled.length) lists.push({ items: rec.expelled.map(function (c) { return c + "(T)"; }), pill: t("expelled") });
             if (lists.length) {
                 if (isPass) html += '<div style="height:10px"></div>';
                 html += '<div class="ref-list-box">';
@@ -867,17 +1387,17 @@
         wrapper.querySelector(".roll-title").textContent = "# " + roll;
         const metaSpans = wrapper.querySelectorAll(".meta-line span");
         if (metaSpans[0]) metaSpans[0].textContent = "📖 " + rec.prog;
-        if (metaSpans[1]) metaSpans[1].textContent = rec.reg === "Marine" ? "📅 Marine Trade" : "📅 Regulation " + rec.reg;
+        if (metaSpans[1]) metaSpans[1].textContent = rec.reg === "Marine" ? "📅 Marine Trade" : "📅 " + t("regulation") + " " + rec.reg;
         wrapper.querySelector(".inst-line").textContent = "🏛️ " + rec.inst;
 
         const pending = rec.ref_sub.length + rec.failed.length + rec.expelled.length;
         const banner = wrapper.querySelector(".summary-banner");
         if (pending === 0) {
             banner.className = "summary-banner pass";
-            banner.textContent = "✅ Passed — All subjects cleared";
+            banner.textContent = t("passedAll");
         } else {
             banner.className = "summary-banner fail";
-            banner.textContent = pending + " subject(s) yet to pass";
+            banner.textContent = t("yetToPass", { n: pending });
         }
 
         const sems = Object.keys(rec.gpas).map(Number).sort(function (a, b) { return b - a; });
@@ -887,7 +1407,7 @@
         wrapper.querySelector("#semestersList, .semestersList").innerHTML = html;
     }
 
-    function showResults(roll, recs) {
+    function showResults(roll, recs, skipScroll) {
         currentResults = recs.map(function (r) { return { roll: roll, rec: r }; });
         const base = document.getElementById("resultWrapper");
         // remove any extra wrappers from a previous multi-result search
@@ -906,40 +1426,41 @@
             base.parentNode.insertBefore(clone, base.nextSibling);
             fillWrapper(clone, roll, recs[k]);
         }
-        base.scrollIntoView({ behavior: "smooth", block: "start" });
+        saveRecent(roll, recs[0]);
+        if (!skipScroll) base.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     // ---------- Search ----------
     function searchRoll() {
         const roll = document.getElementById("rollInput").value.trim();
-        if (!roll) { alert("Please enter a roll number."); return; }
+        if (!roll) { alert(t("enterRoll")); return; }
         const recs = lookupRoll(roll);
         if (recs.length) { showResults(roll, recs); return; }
         document.getElementById("resultWrapper").style.display = "none";
         document.querySelectorAll(".extra-result-wrapper").forEach(function (el) { el.remove(); });
-        alert("Roll " + roll + " not found in the updated results (Exam Aug-Sep 2026, published 10 Nov 2026).\nPlease check the roll number and try again.");
+        alert(t("rollNotFound", { roll: roll }));
     }
 
     function showCGPA() {
-        if (!currentResults.length) { alert("Please search a roll number first."); return; }
+        if (!currentResults.length) { alert(t("searchFirst")); return; }
         let msg = "";
         currentResults.forEach(function (cr) {
             const rec = cr.rec;
             msg += "Roll #" + cr.roll + " — " + semLabel(rec.sem) + " (" + rec.prog + ")\n";
             Object.keys(rec.gpas).map(Number).sort(function (a, b) { return b - a; }).forEach(function (s) {
-                msg += "  " + ORDINAL[s] + " Semester GPA: " + rec.gpas[s] + "\n";
+                msg += "  " + semLabel(s) + " GPA: " + rec.gpas[s] + "\n";
             });
             const cg = computeCGPA(rec);
-            if (cg.value) msg += "  CGPA: " + cg.value + (cg.official ? " (as published by BTEB)" : " (average of passed semesters)") + "\n";
-            if (rec.ref_sub.length) msg += "  Referred: " + rec.ref_sub.join(", ") + "\n";
-            if (rec.failed.length) msg += "  Failed: " + rec.failed.join(", ") + "\n";
+            if (cg.value) msg += "  " + (cg.official ? t("cgpaOfficial") : t("cgpaAverage")) + ": " + cg.value + "\n";
+            if (rec.ref_sub.length) msg += "  " + t("referred") + ": " + rec.ref_sub.join(", ") + "\n";
+            if (rec.failed.length) msg += "  " + t("failed") + ": " + rec.failed.join(", ") + "\n";
             msg += "\n";
         });
         alert(msg.trim());
     }
 
     function shareResult() {
-        if (!currentResults.length) { alert("Please search a roll number first."); return; }
+        if (!currentResults.length) { alert(t("searchFirst")); return; }
         const cr = currentResults[0];
         const cg = computeCGPA(cr.rec);
         const text = "BTEB Result — Roll #" + cr.roll + " (" + semLabel(cr.rec.sem) + ", " + cr.rec.prog + ")"
@@ -997,13 +1518,13 @@
 
     // One-tap copy of the displayed result(s) to the clipboard.
     function copyResult() {
-        if (!currentResults.length) { alert("Please search a roll number first."); return; }
+        if (!currentResults.length) { alert(t("searchFirst")); return; }
         const text = currentResults.map(resultTextFor).join("\n\n-------------------------\n\n");
         const btn = document.getElementById("copyBtn");
         function done() {
             if (btn) {
                 const old = btn.textContent;
-                btn.textContent = "✅ Copied!";
+                btn.textContent = t("copied");
                 setTimeout(function () { btn.textContent = old; }, 2000);
             } else {
                 alert("Result copied to clipboard!");
@@ -1039,17 +1560,17 @@
             if (isNaN(n) || n < 0 || n > 4) { bad = inp; return; }
             vals.push(n);
         });
-        if (bad) { alert("Please enter a valid GPA between 0 and 4.00."); bad.focus(); return; }
-        if (!vals.length) { alert("Please enter at least one semester GPA."); return; }
+        if (bad) { alert(t("validGpa")); bad.focus(); return; }
+        if (!vals.length) { alert(t("enterOneGpa")); return; }
         const cgpa = (vals.reduce(function (a, b) { return a + b; }, 0) / vals.length).toFixed(2);
         const box = document.getElementById("calcResult");
         box.style.display = "block";
-        box.innerHTML = '<div class="gpa-green-box"><div><div class="lbl">CGPA (' + vals.length + ' semester' + (vals.length > 1 ? 's' : '') + ')</div>'
-            + '<div class="grd">Grade: ' + gradeOf(cgpa) + '</div></div>'
+        box.innerHTML = '<div class="gpa-green-box"><div><div class="lbl">' + t("cgpaSemesters", { n: vals.length }) + '</div>'
+            + '<div class="grd">' + t("grade") + ': ' + gradeOf(cgpa) + '</div></div>'
             + '<div class="val">' + cgpa + '</div></div>';
     }
     function fillCalcFromSearch() {
-        if (!currentResults.length) { alert("Please search a roll number first."); return; }
+        if (!currentResults.length) { alert(t("searchFirst")); return; }
         const gpas = currentResults[0].rec.gpas;
         document.querySelectorAll(".calc-gpa").forEach(function (inp) {
             const g = gpas[inp.getAttribute("data-sem")];
@@ -1066,7 +1587,7 @@
 
     // ---------- Printable Grade Sheet ----------
     function openGradeSheet() {
-        if (!currentResults.length) { alert("Please search a roll number first."); return; }
+        if (!currentResults.length) { alert(t("searchFirst")); return; }
         const cr = currentResults[0];
         const rec = cr.rec;
         const cg = computeCGPA(rec);
@@ -1079,15 +1600,15 @@
             const isCgpaOnly = (s === rec.sem && !g && rec.cgpa && !rec.ref_sub.length && !rec.failed.length && !rec.expelled.length);
             let valTxt, gradeTxt, status;
             if (g && g !== "ref") {
-                valTxt = "GPA " + g; gradeTxt = gradeOf(g); status = "Passed";
+                valTxt = "GPA " + g; gradeTxt = gradeOf(g); status = t("passed");
             } else if (isCgpaOnly) {
-                valTxt = "CGPA " + rec.cgpa; gradeTxt = gradeOf(rec.cgpa); status = "Passed";
+                valTxt = "CGPA " + rec.cgpa; gradeTxt = gradeOf(rec.cgpa); status = t("passed");
             } else if (s === rec.sem && rec.failed.length) {
-                valTxt = "—"; gradeTxt = ""; status = "Failed";
+                valTxt = "—"; gradeTxt = ""; status = t("failed");
             } else if (s === rec.sem && isExpelledRec) {
-                valTxt = "—"; gradeTxt = ""; status = "Expelled";
+                valTxt = "—"; gradeTxt = ""; status = t("expelled");
             } else {
-                valTxt = "—"; gradeTxt = ""; status = "Referred";
+                valTxt = "—"; gradeTxt = ""; status = t("referred");
             }
             rows += '<div class="ref-item"><span class="sub-code">' + semLabel(s) + '</span>'
                 + '<span>' + valTxt + '</span>'
@@ -1097,18 +1618,18 @@
         let subs = "";
         if (rec.ref_sub.length || rec.failed.length || rec.expelled.length) {
             subs = '<div style="height:10px"></div><div class="ref-list-box">';
-            rec.ref_sub.forEach(function (c) { subs += refItemHTML(c, "Referred"); });
-            rec.failed.forEach(function (c) { subs += refItemHTML(c, "Failed"); });
-            rec.expelled.forEach(function (c) { subs += refItemHTML(c + "(T)", "Expelled"); });
+            rec.ref_sub.forEach(function (c) { subs += refItemHTML(c, t("referred")); });
+            rec.failed.forEach(function (c) { subs += refItemHTML(c, t("failed")); });
+            rec.expelled.forEach(function (c) { subs += refItemHTML(c + "(T)", t("expelled")); });
             subs += '</div>';
         }
         document.getElementById("gradeSheetContent").innerHTML =
-            '<div class="student-header"><div class="roll-title">Grade Sheet</div>'
+            '<div class="student-header"><div class="roll-title">' + t("gradeSheet") + '</div>'
             + '<div class="meta-line"><span># ' + cr.roll + '</span></div>'
             + '<div class="inst-line">🏛️ ' + esc(rec.inst) + '</div>'
-            + '<div class="meta-line"><span>📖 ' + esc(rec.prog) + '</span><span>📅 Regulation ' + esc(rec.reg) + '</span></div></div>'
+            + '<div class="meta-line"><span>📖 ' + esc(rec.prog) + '</span><span>📅 ' + t("regulation") + ' ' + esc(rec.reg) + '</span></div></div>'
             + '<div class="ref-list-box">' + rows + '</div>' + subs
-            + (cg.value ? '<div style="height:12px"></div><div class="gpa-green-box"><div><div class="lbl">CGPA' + (cg.official ? ' (as published by BTEB)' : ' (average of passed semesters)') + '</div><div class="grd">Grade: ' + gradeOf(cg.value) + '</div></div><div class="val">' + cg.value + '</div></div>' : '')
+            + (cg.value ? '<div style="height:12px"></div><div class="gpa-green-box"><div><div class="lbl">' + (cg.official ? t("cgpaOfficial") : t("cgpaAverage")) + '</div><div class="grd">' + t("grade") + ': ' + gradeOf(cg.value) + '</div></div><div class="val">' + cg.value + '</div></div>' : '')
             + (rec.note ? '<div style="height:10px"></div><div class="ref-list-box"><div class="ref-item"><span class="sub-title">⚠️ ' + esc(rec.note) + '</span></div></div>' : '');
         document.getElementById("gradeSheetOverlay").classList.add("open");
     }
@@ -1122,14 +1643,364 @@
     }
     window.addEventListener("afterprint", function () { document.body.classList.remove("printing-sheet"); });
 
+    // ---------- Dark mode ----------
+    function applyDark(on) {
+        document.body.classList.toggle("dark", !!on);
+        storeSet("bteb_dark", on ? "1" : "0");
+        const btn = document.getElementById("darkBtn");
+        if (btn) btn.textContent = on ? "☀️" : "🌙";
+        const meta = document.getElementById("themeColorMeta");
+        if (meta) meta.setAttribute("content", on ? "#0f172a" : "#1e3a8a");
+    }
+    function toggleDark() { applyDark(!document.body.classList.contains("dark")); }
+
+    // ---------- Recent searches ----------
+    const RECENT_KEY = "bteb_recent";
+    function getRecent() {
+        try { return JSON.parse(storeGet(RECENT_KEY) || "[]"); } catch (e) { return []; }
+    }
+    function saveRecent(roll, rec) {
+        const list = getRecent().filter(function (r) { return r.roll !== roll; });
+        list.unshift({ roll: roll, sem: rec.sem });
+        storeSet(RECENT_KEY, JSON.stringify(list.slice(0, 8)));
+        renderRecent();
+    }
+    function renderRecent() {
+        const row = document.getElementById("recentRow");
+        const chips = document.getElementById("recentChips");
+        if (!row || !chips) return;
+        const list = getRecent();
+        if (!list.length) { row.style.display = "none"; chips.innerHTML = ""; return; }
+        row.style.display = "flex";
+        chips.innerHTML = list.map(function (r) {
+            return '<span class="recent-chip" onclick="searchRollFor(\'' + esc(r.roll) + '\')">#' + esc(r.roll) + ' · ' + esc(semLabel(r.sem)) + '</span>';
+        }).join("");
+    }
+    function clearRecent() {
+        storeSet(RECENT_KEY, "[]");
+        renderRecent();
+    }
+    function searchRollFor(roll) {
+        document.getElementById("rollInput").value = roll;
+        searchRoll();
+    }
+
+    // ---------- Statistics dashboard ----------
+    // Classify one compact record array: passed / referred / failed / expelled.
+    function classifyCompact(a) {
+        const isExp = (a[8] && a[8].length > 0) || (a[9] && a[9].indexOf("Expelled") === 0);
+        if (isExp) return "expelled";
+        if (a[7] && a[7].length > 0) return "failed";
+        if (a[6] && a[6].length > 0) return "referred";
+        return "passed";
+    }
+    function eachRecord(fn) {
+        Object.keys(RESULT_DB).forEach(function (roll) {
+            const v = RESULT_DB[roll];
+            const recs = Array.isArray(v[0]) ? v : [v];
+            recs.forEach(function (a) { fn(roll, a); });
+        });
+    }
+    function computeStats() {
+        const s = { total: 0, passed: 0, referred: 0, failed: 0, expelled: 0, bySem: {} };
+        eachRecord(function (roll, a) {
+            const st = classifyCompact(a);
+            s.total++;
+            s[st]++;
+            const sem = a[1];
+            if (!s.bySem[sem]) s.bySem[sem] = { total: 0, passed: 0 };
+            s.bySem[sem].total++;
+            if (st === "passed") s.bySem[sem].passed++;
+        });
+        return s;
+    }
+    function renderStats() {
+        const box = document.getElementById("statsContent");
+        if (!box) return;
+        const s = computeStats();
+        const pct = s.total ? (s.passed / s.total * 100) : 0;
+        const fmt = function (n) { return n.toLocaleString("en-IN"); };
+        let html = '<div class="stat-grid">'
+            + '<div class="stat-box"><div class="stat-num">' + fmt(s.total) + '</div><div class="stat-lbl">' + t("statsTotal") + '</div></div>'
+            + '<div class="stat-box green"><div class="stat-num">' + fmt(s.passed) + '</div><div class="stat-lbl">' + t("statsPassed") + '</div></div>'
+            + '<div class="stat-box amber"><div class="stat-num">' + fmt(s.referred) + '</div><div class="stat-lbl">' + t("statsReferred") + '</div></div>'
+            + '<div class="stat-box red"><div class="stat-num">' + fmt(s.failed) + '</div><div class="stat-lbl">' + t("statsFailed") + '</div></div>'
+            + '<div class="stat-box red"><div class="stat-num">' + fmt(s.expelled) + '</div><div class="stat-lbl">' + t("statsExpelled") + '</div></div>'
+            + '<div class="stat-box blue"><div class="stat-num">' + pct.toFixed(1) + '%</div><div class="stat-lbl">' + t("statsPassRate") + '</div></div>'
+            + '</div>';
+        html += '<div class="stat-sem-title">' + t("statsBySem") + '</div>';
+        Object.keys(s.bySem).map(Number).sort(function (a, b) { return a - b; }).forEach(function (sem) {
+            const b = s.bySem[sem];
+            const p = b.total ? Math.round(b.passed / b.total * 100) : 0;
+            html += '<div class="stat-bar-row"><span class="stat-bar-lbl">' + semLabel(sem) + '</span>'
+                + '<div class="stat-bar-track"><div class="stat-bar-fill" style="width:' + p + '%"></div></div>'
+                + '<span class="stat-bar-val">' + p + '%</span></div>';
+        });
+        box.innerHTML = html;
+    }
+
+    // ---------- Institute-wise results ----------
+    let lastInstQuery = null;
+    function populateInstList() {
+        const dl = document.getElementById("instList");
+        if (!dl) return;
+        dl.innerHTML = INSTITUTES.map(function (n) { return '<option value="' + esc(n) + '">'; }).join("");
+    }
+    function instSearch() {
+        const box = document.getElementById("instResults");
+        if (!box) return;
+        const q = document.getElementById("instInput").value.trim();
+        if (!q && !lastInstQuery) { box.innerHTML = '<div class="inst-note">' + t("instSelectFirst") + '</div>'; return; }
+        let idx = -1;
+        if (q) {
+            idx = INSTITUTES.indexOf(q);
+            if (idx === -1) {
+                const ql = q.toLowerCase();
+                idx = INSTITUTES.findIndex(function (n) { return n.toLowerCase().indexOf(ql) !== -1; });
+            }
+        } else if (lastInstQuery) {
+            idx = lastInstQuery.idx;
+        }
+        if (idx === -1) { box.innerHTML = '<div class="inst-note">' + t("instNotFound") + '</div>'; return; }
+        const semFilter = parseInt(document.getElementById("instSem").value, 10) || 0;
+        lastInstQuery = { idx: idx, sem: semFilter };
+        const rows = [];
+        let passed = 0, referred = 0, failed = 0, expelled = 0;
+        eachRecord(function (roll, a) {
+            if (a[0] !== idx) return;
+            if (semFilter && a[1] !== semFilter) return;
+            const st = classifyCompact(a);
+            if (st === "passed") passed++; else if (st === "referred") referred++; else if (st === "failed") failed++; else expelled++;
+            let gpaTxt = "";
+            if (a[5]) gpaTxt = "CGPA " + a[5];
+            else if (a[4]) {
+                const parts = a[4].split(",").filter(function (x) { return x !== "" && x !== "R"; });
+                if (parts.length) gpaTxt = "GPA " + parts[parts.length - 1];
+            }
+            rows.push({ roll: roll, sem: a[1], gpa: gpaTxt, st: st });
+        });
+        if (!rows.length) { box.innerHTML = '<div class="inst-note">' + t("instNoResults") + '</div>'; return; }
+        rows.sort(function (x, y) { return parseInt(x.roll, 10) - parseInt(y.roll, 10); });
+        const total = rows.length;
+        const shown = rows.slice(0, 200);
+        let html = '<div class="inst-note">🏛️ ' + esc(INSTITUTES[idx]) + ' — '
+            + total.toLocaleString("en-IN") + ' ' + t("instStudents") + ' • '
+            + t("passed") + ' ' + passed.toLocaleString("en-IN") + ' • '
+            + t("referred") + ' ' + referred.toLocaleString("en-IN") + ' • '
+            + t("failed") + ' ' + failed.toLocaleString("en-IN")
+            + (expelled ? ' • ' + t("expelled") + ' ' + expelled.toLocaleString("en-IN") : '')
+            + '</div><div class="ref-list-box">';
+        shown.forEach(function (r) {
+            html += '<div class="ref-item inst-row" onclick="searchRollFor(\'' + esc(r.roll) + '\')">'
+                + '<span class="sub-code">#' + esc(r.roll) + '</span>'
+                + '<span>' + semLabel(r.sem) + (r.gpa ? ' · ' + r.gpa : '') + '</span>'
+                + '<span class="sub-pill">' + t(r.st) + '</span></div>';
+        });
+        html += '</div>';
+        if (total > shown.length) html += '<div class="inst-note">' + t("instShowing", { n: shown.length.toLocaleString("en-IN"), total: total.toLocaleString("en-IN") }) + '</div>';
+        box.innerHTML = html;
+    }
+
+    // ---------- Share result as image ----------
+    function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(" ");
+        let line = "";
+        let yy = y;
+        words.forEach(function (w) {
+            const test = line ? line + " " + w : w;
+            if (ctx.measureText(test).width > maxWidth && line) {
+                ctx.fillText(line, x, yy);
+                line = w;
+                yy += lineHeight;
+            } else {
+                line = test;
+            }
+        });
+        if (line) { ctx.fillText(line, x, yy); yy += lineHeight; }
+        return yy;
+    }
+    function drawShareImage(cr) {
+        const rec = cr.rec;
+        const cg = computeCGPA(rec);
+        const W = 1080, pad = 64;
+        const sems = Object.keys(rec.gpas).map(Number).sort(function (a, b) { return b - a; });
+        if (!sems.length) sems.push(rec.sem);
+        const refLines = [];
+        rec.ref_sub.forEach(function (c) { refLines.push("Referred: " + c); });
+        rec.failed.forEach(function (c) { refLines.push("Failed: " + c); });
+        rec.expelled.forEach(function (c) { refLines.push("Expelled: " + c); });
+        const shownRef = refLines.slice(0, 6);
+        const moreRef = refLines.length - shownRef.length;
+        const rowH = 92;
+        let H = 300 + 40 + sems.length * rowH;
+        if (shownRef.length) H += 56 + shownRef.length * 50 + (moreRef > 0 ? 50 : 0);
+        if (cg.value) H += 170;
+        H += 120;
+        const canvas = document.createElement("canvas");
+        canvas.width = W;
+        canvas.height = H;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return null;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, W, H);
+        const grad = ctx.createLinearGradient(0, 0, W, 0);
+        grad.addColorStop(0, "#1e3a8a");
+        grad.addColorStop(1, "#2563eb");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, W, 230);
+        ctx.textAlign = "left";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "700 58px Inter, sans-serif";
+        ctx.fillText("BTEB Results Zone", pad, 100);
+        ctx.font = "500 34px Inter, sans-serif";
+        ctx.fillStyle = "#dbeafe";
+        ctx.fillText("Diploma in Engineering Result", pad, 158);
+        let y = 322;
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "700 74px Inter, sans-serif";
+        ctx.fillText("Roll # " + cr.roll, pad, y);
+        y += 62;
+        ctx.font = "600 33px Inter, sans-serif";
+        ctx.fillStyle = "#475569";
+        y = wrapCanvasText(ctx, rec.inst, pad, y, W - 2 * pad, 46);
+        y += 8;
+        ctx.font = "500 30px Inter, sans-serif";
+        ctx.fillStyle = "#64748b";
+        ctx.fillText(rec.prog + "  •  Regulation " + rec.reg, pad, y);
+        y += 34;
+        ctx.fillStyle = "#e2e8f0";
+        ctx.fillRect(pad, y, W - 2 * pad, 2);
+        y += 24;
+        sems.forEach(function (s) {
+            const g = rec.gpas[s];
+            const isPass = g && g !== "ref";
+            const isCgpaOnly = (s === rec.sem && !g && rec.cgpa && !rec.ref_sub.length && !rec.failed.length && !rec.expelled.length);
+            const status = (s === rec.sem && rec.failed.length) ? "Failed" : (s === rec.sem && rec.expelled.length) ? "Expelled" : ((isPass || isCgpaOnly) ? "Passed" : "Referred");
+            const ok = (status === "Passed");
+            ctx.fillStyle = ok ? "#16a34a" : "#dc2626";
+            ctx.fillRect(pad, y, 10, 64);
+            ctx.fillStyle = "#0f172a";
+            ctx.font = "700 36px Inter, sans-serif";
+            ctx.fillText(semLabel(s), pad + 28, y + 44);
+            const right = (isPass ? "GPA " + g + "  (" + gradeOf(g) + ")" : (isCgpaOnly ? "CGPA " + rec.cgpa + "  (" + gradeOf(rec.cgpa) + ")" : status));
+            ctx.font = "700 36px Inter, sans-serif";
+            ctx.fillStyle = ok ? "#16a34a" : "#dc2626";
+            const rw = ctx.measureText(right).width;
+            ctx.fillText(right, W - pad - rw, y + 44);
+            y += rowH;
+        });
+        if (shownRef.length) {
+            y += 6;
+            ctx.font = "600 30px Inter, sans-serif";
+            ctx.fillStyle = "#be123c";
+            shownRef.forEach(function (line) {
+                ctx.fillText("•  " + line, pad, y);
+                y += 50;
+            });
+            if (moreRef > 0) {
+                ctx.fillText("•  +" + moreRef + " more subject(s)", pad, y);
+                y += 50;
+            }
+            y += 6;
+        }
+        if (cg.value) {
+            const boxH = 130;
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(pad, y, W - 2 * pad, boxH, 16);
+            else ctx.rect(pad, y, W - 2 * pad, boxH);
+            ctx.fillStyle = "#f0fdf4";
+            ctx.fill();
+            ctx.fillStyle = "#166534";
+            ctx.font = "600 32px Inter, sans-serif";
+            ctx.fillText("CGPA" + (cg.official ? " (as published by BTEB)" : " (average of passed semesters)"), pad + 28, y + 56);
+            ctx.font = "700 32px Inter, sans-serif";
+            ctx.fillStyle = "#1e293b";
+            ctx.fillText("Grade: " + gradeOf(cg.value), pad + 28, y + 100);
+            ctx.font = "700 64px Inter, sans-serif";
+            ctx.fillStyle = "#16a34a";
+            const cw = ctx.measureText(cg.value).width;
+            ctx.fillText(cg.value, W - pad - 28 - cw, y + 88);
+            y += boxH + 20;
+        }
+        ctx.font = "500 28px Inter, sans-serif";
+        ctx.fillStyle = "#94a3b8";
+        ctx.fillText("bteb-polytechnic.github.io/-diploma-result", pad, H - 44);
+        ctx.textAlign = "right";
+        ctx.fillText("MD ABU SUFIYAN", W - pad, H - 44);
+        ctx.textAlign = "left";
+        return canvas;
+    }
+    function shareResultImage() {
+        if (!currentResults.length) { alert(t("searchFirst")); return; }
+        const canvas = drawShareImage(currentResults[0]);
+        if (!canvas) { alert(t("imageFailed")); return; }
+        const filename = "bteb-result-" + currentResults[0].roll + ".png";
+        function download(blob) {
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+        if (!canvas.toBlob) { alert(t("imageFailed")); return; }
+        canvas.toBlob(function (blob) {
+            if (!blob) { alert(t("imageFailed")); return; }
+            try {
+                const file = new File([blob], filename, { type: "image/png" });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    navigator.share({ files: [file], title: "BTEB Result", text: "Roll #" + currentResults[0].roll }).catch(function () { download(blob); });
+                    return;
+                }
+            } catch (e) { /* fall through to download */ }
+            download(blob);
+        }, "image/png");
+    }
+
+    // ---------- PWA: service worker + install prompt ----------
+    let deferredPrompt = null;
+    function registerSW() {
+        if (!("serviceWorker" in navigator)) return;
+        window.addEventListener("load", function () {
+            try {
+                navigator.serviceWorker.register("sw.js").catch(function () {});
+            } catch (e) { /* SW not supported */ }
+        });
+    }
+    window.addEventListener("beforeinstallprompt", function (e) {
+        e.preventDefault();
+        deferredPrompt = e;
+        const btn = document.getElementById("installBtn");
+        if (btn) btn.style.display = "inline-block";
+    });
+    function installApp() {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function () {
+            deferredPrompt = null;
+            const btn = document.getElementById("installBtn");
+            if (btn) btn.style.display = "none";
+        }).catch(function () {});
+    }
+    window.addEventListener("appinstalled", function () {
+        const btn = document.getElementById("installBtn");
+        if (btn) btn.style.display = "none";
+    });
+
     // ---------- Init: results are embedded, no PDF download needed ----------
     (function init() {
-        const statusText = document.getElementById("statusText");
-        const statusBar = document.getElementById("statusBar");
-        const total = (typeof RESULT_META !== "undefined" && RESULT_META.total)
-            ? RESULT_META.total.toLocaleString("en-IN") : Object.keys(RESULT_DB).length.toLocaleString("en-IN");
-        statusText.textContent = "✅ " + total + " results loaded • Exam Aug-Sep 2026 • Published 10 Nov 2026";
-        statusBar.classList.add("loaded");
+        const savedDark = storeGet("bteb_dark");
+        let prefersDark = false;
+        try { prefersDark = !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches); } catch (e) {}
+        applyDark(savedDark !== null ? savedDark === "1" : prefersDark);
+        applyLang(storeGet("bteb_lang") || "en");
+        updateStatusText();
+        document.getElementById("statusBar").classList.add("loaded");
+        renderRecent();
+        renderStats();
+        populateInstList();
+        registerSW();
     })();
 
     // ---------- Shareable result links: ?roll=700014 auto-searches ----------

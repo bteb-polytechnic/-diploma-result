@@ -82,5 +82,15 @@ button e "✅ Copied!" dekhabe 2 second.
 
 ## Select PDF button
 
-Eta ekhono ache — bhobisshote notun kono BTEB result PDF upload koreo roll search kora jabe,
-tobe main result ekhon file er vitorei embedded.
+14 Nov 2026 e soriye deoa hoyeche — result ekhon file er vitorei embedded, tai PDF upload
+er ar dorkar nei. Button, file input, pdf.js library ar upload er code shob sorano hoyeche.
+
+## Notun feature (14 Nov 2026)
+
+- **🌙 Dark Mode** — navbar er 🌙 button e chaple dark mode on/off hobe. Pochondo browser e save thake, porer bar eleo mone thakbe. Prothom bar phone er system setting onujayi cholbe.
+- **🌐 Bangla/English** — navbar er বাং/EN button e chaple pura site Bangla ba English e dekhte parbe (search, result card, calculator, grade scale, grade sheet, statistics shob).
+- **🕘 Recent Search** — search kora roll gulo search box er niche chip hishebe thake (sorbochcho 8 ta), ek tap e abar search kora jay. Clear chaple muche jabe.
+- **📊 Result Statistics** — Grade Scale er niche: mot result, pass/referred/failed/expelled er sonkha, pass rate, ar prottek semester er pass rate bar chart soho.
+- **🏫 Institute Results** — institute er nam likhe (suggestion asbe) View chaple oi institute er shob student er result dekhabe — roll, semester, GPA, status soho. Semester filter o ache. Row te tap korle oi roll er result khulbe.
+- **🖼️ Share Image** — result card e Share Image button: roll er result er sundor ekta chobi (PNG) baniye share ba download kora jabe — Facebook/WhatsApp e deoar jonno.
+- **📱 PWA (Installable App)** — phone er browser theke "Install" korle site ta app er moto home screen e bosbe, app er moto khulbe. Offline eo ager dekha page cholbe (service worker).
