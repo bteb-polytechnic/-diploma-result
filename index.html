@@ -9,6 +9,31 @@
     <meta name="description" content="Check BTEB Polytechnic Diploma in Engineering Results, Semester GPA, CGPA, and Referred Subjects. Developed by MD ABU SUFIYAN.">
     <meta name="keywords" content="bteb results zone, diploma result bd, polytechnic result, bteb result, 7th semester result, MD ABU SUFIYAN">
     <meta name="author" content="MD ABU SUFIYAN">
+    <link rel="canonical" href="https://bteb-polytechnic.github.io/-diploma-result/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="BTEB Results Zone">
+    <meta property="og:title" content="BTEB Results Zone | Diploma in Engineering Result">
+    <meta property="og:description" content="Check BTEB Polytechnic Diploma in Engineering Results, Semester GPA, CGPA, and Referred Subjects. 1,60,657 results from BTEB 2026 exams.">
+    <meta property="og:url" content="https://bteb-polytechnic.github.io/-diploma-result/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="BTEB Results Zone | Diploma in Engineering Result">
+    <meta name="twitter:description" content="Check BTEB Polytechnic Diploma in Engineering Results, Semester GPA, CGPA, and Referred Subjects.">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "BTEB Results Zone",
+      "url": "https://bteb-polytechnic.github.io/-diploma-result/",
+      "description": "Check BTEB Polytechnic Diploma in Engineering Results, Semester GPA, CGPA, and Referred Subjects.",
+      "inLanguage": "en",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://bteb-polytechnic.github.io/-diploma-result/?roll={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
@@ -1207,6 +1232,18 @@
             ? RESULT_META.total.toLocaleString("en-IN") : Object.keys(RESULT_DB).length.toLocaleString("en-IN");
         statusText.textContent = "✅ " + total + " results loaded • Exam Aug-Sep 2026 • Published 10 Nov 2026";
         statusBar.classList.add("loaded");
+    })();
+
+    // ---------- Shareable result links: ?roll=700014 auto-searches ----------
+    (function autoSearchFromUrl() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const roll = (params.get("roll") || "").trim();
+            if (/^\d{6}$/.test(roll)) {
+                document.getElementById("rollInput").value = roll;
+                searchRoll();
+            }
+        } catch (e) { /* ignore bad URLs */ }
     })();
 
 </script>
