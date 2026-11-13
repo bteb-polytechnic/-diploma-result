@@ -1,244 +1,591 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BTEB Results Zone | Diploma in Engineering Result</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Check BTEB Polytechnic Diploma in Engineering Results, Semester GPA, CGPA, and Referred Subjects. Developed by MD ABU SUFIYAN.">
+    <meta name="keywords" content="bteb results zone, diploma result bd, polytechnic result, bteb result, 7th semester result, MD ABU SUFIYAN">
+    <meta name="author" content="MD ABU SUFIYAN">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; }
-        body { background-color: #f4f6f9; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 10px; }
-        
-        .main-container { width: 100%; max-width: 480px; }
-        
-        /* App Header */
-        .app-bar { background: #ffffff; padding: 14px 18px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #0056b3; }
-        .app-bar h2 { color: #0056b3; font-size: 19px; font-weight: 700; }
-        .app-bar .lang { font-size: 13px; color: #555; background: #eef2f7; padding: 3px 8px; border-radius: 6px; font-weight: 600; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', 'Hind Siliguri', sans-serif;
+        }
+        body {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        /* Search Card */
-        .search-card { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); margin-bottom: 12px; text-align: center; }
-        .search-card input { width: 100%; padding: 12px; font-size: 17px; border: 2px solid #ddd; border-radius: 8px; outline: none; text-align: center; font-weight: 700; margin-bottom: 10px; }
-        .search-card input:focus { border-color: #0056b3; }
-        .btn-search { width: 100%; background: #0056b3; color: #fff; border: none; padding: 11px; font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer; }
-        .btn-search:hover { background: #004085; }
+        /* Top Navbar like btebresultszone */
+        .navbar {
+            width: 100%;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+        .navbar-brand {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1e3a8a;
+            letter-spacing: -0.3px;
+        }
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+        }
 
-        #statusBanner { background: #fff8e1; color: #856404; padding: 8px; border-radius: 6px; font-size: 12px; text-align: center; margin-bottom: 10px; border: 1px solid #ffeeba; font-weight: 600; }
+        .container {
+            width: 100%;
+            max-width: 520px;
+            padding: 14px 12px 30px;
+        }
 
-        /* Result Area */
-        #resultArea { display: none; }
+        /* Developer Top Banner */
+        .dev-top-badge {
+            background: linear-gradient(90deg, #1e3a8a, #2563eb);
+            color: #ffffff;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+        }
+        .dev-top-badge strong {
+            font-weight: 700;
+            color: #fde047;
+            letter-spacing: 0.4px;
+        }
 
-        /* Student Info Card */
-        .student-card { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); margin-bottom: 12px; text-align: center; border-top: 4px solid #0056b3; }
-        .student-card h3 { font-size: 22px; color: #222; font-weight: 700; margin-bottom: 4px; }
-        .student-card p { font-size: 13px; color: #555; margin-bottom: 12px; }
+        /* Search Box Card */
+        .search-box-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .status-bar {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .status-bar.loaded {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #166534;
+        }
+        .file-upload-btn {
+            background: #e2e8f0;
+            color: #1e293b;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+        .search-input-group {
+            display: flex;
+            gap: 8px;
+        }
+        .search-input-group input {
+            flex: 1;
+            padding: 12px 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            color: #0f172a;
+        }
+        .search-input-group input:focus {
+            border-color: #2563eb;
+        }
+        .btn-search {
+            background: #1e3a8a;
+            color: #ffffff;
+            border: none;
+            padding: 0 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-search:hover {
+            background: #172554;
+        }
+        .btn-search:disabled {
+            background: #94a3b8;
+        }
 
-        /* Action Buttons Row */
-        .action-row { display: flex; justify-content: space-around; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 10px 0; margin-bottom: 12px; }
-        .action-btn { background: none; border: none; font-size: 13px; color: #444; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-        .action-btn span { font-size: 16px; }
+        /* Main Result Modal/Card like Screenshot */
+        #resultWrapper {
+            display: none;
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            padding: 20px 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
 
-        /* Alert Box for Total Backlog */
-        .alert-backlog { background: #fff5f5; color: #c53030; padding: 10px; border-radius: 8px; font-size: 14px; font-weight: 700; border: 1px solid #fed7d7; margin-bottom: 12px; text-align: center; }
+        .student-header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .roll-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        .meta-line {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 5px;
+        }
+        .inst-line {
+            font-size: 13.5px;
+            color: #475569;
+            font-weight: 600;
+            margin-top: 4px;
+        }
 
-        /* Semester Card */
-        .semester-card { background: #ffffff; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); margin-bottom: 12px; overflow: hidden; border: 1px solid #eaeaea; }
-        .semester-header { padding: 12px 14px; background: #fafbfc; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
-        .semester-title { font-size: 15px; font-weight: 700; color: #333; }
-        
-        .badge-pass { background: #e8f5e9; color: #2e7d32; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
-        .badge-fail { background: #ffebee; color: #c62828; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+        /* Action Pills (GPA, CGPA, Save, Download, Share) */
+        .action-pills {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+        .pill-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 7px 11px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #1e293b;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s;
+        }
+        .pill-btn:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+        }
 
-        /* Subject List Box */
-        .subject-container { padding: 10px 14px; }
-        .date-label { font-size: 11px; color: #666; margin-bottom: 6px; display: flex; justify-content: space-between; }
-        
-        .subject-item { background: #fff; border: 1px solid #e2e8f0; padding: 9px 12px; border-radius: 8px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; color: #c53030; }
-        .subject-item .tag { background: #edf2f7; color: #4a5568; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: normal; margin-left: 5px; }
+        /* Summary Banner (6 subject(s) yet to pass / Passed) */
+        .summary-banner {
+            padding: 14px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+        .summary-banner.fail {
+            background-color: #fff1f2;
+            border: 1px solid #fecdd3;
+            color: #be123c;
+        }
+        .summary-banner.pass {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #15803d;
+        }
 
-        /* GPA Box for Passed */
-        .gpa-passed-box { margin: 10px 14px; background: #f0fff4; border: 1px solid #c6f6d5; padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .gpa-passed-box div span { font-size: 11px; color: #276749; display: block; }
-        .gpa-passed-box div strong { font-size: 20px; color: #22543d; }
-        .grade-badge { font-size: 16px; font-weight: 700; color: #276749; }
+        /* Individual Semester Card */
+        .sem-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .sem-card-header {
+            padding: 13px 15px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sem-name {
+            font-size: 15.5px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .sem-name svg {
+            color: #2563eb;
+        }
+        .sem-status-pass {
+            color: #16a34a;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .sem-status-fail {
+            color: #dc2626;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
-        .error-box { background: #ffebee; color: #c62828; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 14px; }
-        
-        /* Developer Footer Branding */
-        .footer { margin-top: 15px; font-size: 12px; color: #555; text-align: center; line-height: 1.6; }
-        .footer strong { color: #0056b3; }
+        .sem-card-body {
+            padding: 12px 15px 15px;
+        }
+        .exam-date-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12.5px;
+            color: #3b82f6;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        .exam-badges {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .badge-promoted {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .badge-time {
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dot-green {
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Passed Green GPA Box */
+        .gpa-green-box {
+            background-color: #f0fdf4;
+            border-radius: 8px;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .gpa-green-box .lbl {
+            font-size: 13.5px;
+            color: #334155;
+            font-weight: 500;
+        }
+        .gpa-green-box .val {
+            font-size: 23px;
+            font-weight: 700;
+            color: #16a34a;
+        }
+        .gpa-green-box .grd {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        /* Referred Subject List Box */
+        .ref-list-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .ref-item {
+            padding: 11px 13px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+            line-height: 1.5;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+        }
+        .ref-item:last-child {
+            border-bottom: none;
+        }
+        .sub-code {
+            color: #4c1d95;
+            font-weight: 600;
+        }
+        .sub-title {
+            color: #be123c;
+            font-weight: 500;
+        }
+        .sub-pill {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+            font-size: 11px;
+            padding: 1px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        /* Footer Branding */
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            padding: 18px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            width: 100%;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+        .footer .creator {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        @media print {
+            .navbar, .search-box-card, .action-pills, .dev-top-badge {
+                display: none !important;
+            }
+            body { background: #fff; }
+            #resultWrapper { box-shadow: none; border: none; }
+        }
     </style>
 </head>
 <body>
 
-<div class="main-container">
-    <div class="app-bar">
-        <h2>BTEB Results Zone</h2>
-        <span class="lang">🌐 EN</span>
+    <!-- Top Navigation Bar -->
+    <div class="navbar">
+        <div class="navbar-brand">BTEB Results Zone</div>
+        <div class="navbar-right">
+            <span>文A EN</span>
+            <span>☰</span>
+        </div>
     </div>
 
-    <div class="search-card">
-        <div id="statusBanner">⏳ ডাটাবেজ লোড হচ্ছে...</div>
-        <input type="number" id="rollInput" placeholder="রোল নম্বর দিন (যেমন: 101882)" onkeypress="if(event.key==='Enter') searchResult()">
-        <button class="btn-search" id="searchBtn" onclick="searchResult()">ফলাফল খুঁজুন</button>
-    </div>
-
-    <div id="resultArea">
-        <div class="student-card">
-            <h3 id="resRoll"># ------</h3>
-            <p>Diploma in Engineering • Regulation 2016</p>
-            
-            <div class="action-row">
-                <button class="action-btn"><span>📊</span> GPA</button>
-                <button class="action-btn"><span>📈</span> CGPA</button>
-                <button class="action-btn" onclick="alert('রেজাল্ট সেভ করা হয়েছে!')"><span>💾</span> Save</button>
-                <button class="action-btn" onclick="window.print()"><span>📥</span> Download</button>
-                <button class="action-btn" onclick="alert('লিংক কপি করা হয়েছে!')"><span>🔗</span> Share</button>
-            </div>
-
-            <div id="alertBacklogBox" class="alert-backlog">0 subject(s) yet to pass</div>
+    <div class="container">
+        <!-- Creator Credit Banner -->
+        <div class="dev-top-badge">
+            Official Result Portal • Created by <strong>MD ABU SUFIYAN</strong>
         </div>
 
-        <div id="semesterContainer"></div>
-    </div>
-</div>
+        <!-- Search Input Section -->
+        <div class="search-box-card">
+            <div id="statusBar" class="status-bar">
+                <span id="statusText">⏳ Loading 283-page Result PDF...</span>
+                <label class="file-upload-btn">
+                    📂 Select PDF
+                    <input type="file" id="pdfUpload" accept="application/pdf" style="display:none" onchange="loadLocalPDF(event)">
+                </label>
+            </div>
+            <div class="search-input-group">
+                <input type="number" id="rollInput" placeholder="Enter Roll No (e.g. 101171, 502559)" onkeypress="if(event.key==='Enter') searchRoll()">
+                <button class="btn-search" id="searchBtn" onclick="searchRoll()">Search</button>
+            </div>
+        </div>
 
-<div class="footer">
-    &copy; BTEB Results Zone BD | সর্বস্বত্ব সংরক্ষিত<br>
-    Developed with ❤️ by <strong>MD ABU SUFIYAN</strong>
-</div>
+        <!-- Result Display Section (Exact BTEB Results Zone Clone) -->
+        <div id="resultWrapper">
+            <div class="student-header">
+                <div class="roll-title" id="dispRoll"># 101171</div>
+                <div class="meta-line">
+                    <span>📖 Diploma in Engineering</span>
+                    <span>📅 Regulation 2016</span>
+                </div>
+                <div class="inst-line" id="dispInst">🏛️ Loading Institute...</div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-pills">
+                <button class="pill-btn" onclick="showCGPA()">🧮 GPA</button>
+                <button class="pill-btn" onclick="showCGPA()">📊 CGPA</button>
+                <button class="pill-btn" onclick="alert('Result saved to browser!')">🤍 Save</button>
+                <button class="pill-btn" onclick="window.print()">⬇️ Download</button>
+                <button class="pill-btn" onclick="shareResult()">🔗 Share</button>
+            </div>
+
+            <!-- Total Referred / Pass Status Box -->
+            <div id="summaryBanner" class="summary-banner fail">
+                2 subject(s) yet to pass
+            </div>
+
+            <!-- Semester Cards Container -->
+            <div id="semestersList"></div>
+        </div>
+
+        <!-- Footer with Creator Name -->
+        <div class="footer">
+            <p>&copy; 2026 BTEB Results Zone | Bangladesh Technical Education Board</p>
+            <div class="creator">Designed & Developed by MD ABU SUFIYAN</div>
+        </div>
+    </div>
 
 <script>
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
     let pdfDoc = null;
-    const PDF_URL = 'RESULT_7th_2016_Regulation.pdf';
+    const PDF_FILE_NAME = 'RESULT_7th_2016_Regulation.pdf';
 
-    const demoDatabase = {
-        "101882": { gpa7: "3.27", gpa6: "3.51", gpa5: "3.11", gpa4: "3.09", ref_sub: "" },
-        "101171": { gpa7: "ref", gpa6: "3.46", gpa5: "3.41", gpa4: "3.30", ref_sub: "66771(T), 66773(T)" },
-        "500897": { gpa7: "ref", gpa6: "2.69", gpa5: "2.59", gpa4: "2.67", ref_sub: "65853(T)" }
+    // BTEB 2016 Regulation Subject Code Dictionary
+    const subjectNames = {
+        "65851": "Accounting Theory & Practice",
+        "65852": "Industrial Management",
+        "65853": "Innovation & Entrepreneurship",
+        "66441": "Structural Mechanics",
+        "66442": "Estimating & Costing-I",
+        "66444": "Geotechnical Engineering",
+        "66445": "Water Supply Engineering",
+        "66452": "Surveying-III",
+        "66454": "Theory of Structure",
+        "66455": "Hydraulics",
+        "66456": "Transportation Engineering-I",
+        "66461": "Advance Surveying",
+        "66462": "Transportation Engineering-II",
+        "66463": "Design of Structure-I",
+        "66465": "Environmental Engineering-I",
+        "66471": "Civil Engineering Project",
+        "66472": "Sanitary Engineering",
+        "66473": "Transportation Engineering-III",
+        "66474": "Design of Structure-II",
+        "66475": "Water Resources Engineering",
+        "66631": "Programming Essentials",
+        "66641": "Object Oriented Programming",
+        "66642": "Data Structure & Algorithm",
+        "66644": "Web Development",
+        "66651": "Programming in Java",
+        "66653": "Surveillance Security System",
+        "66661": "Database Management System",
+        "66662": "Computer Networking",
+        "66664": "Microprocessor & Interfacing",
+        "66665": "Network Administration & Services",
+        "66667": "Cyber Security & Ethics",
+        "66671": "System Analysis & Design",
+        "66672": "Network Administration & Services",
+        "66673": "Apps Development Project",
+        "66674": "E-Commerce & CMS",
+        "66675": "Cyber Security & Ethics",
+        "66676": "Embedded System Design",
+        "66678": "Cloud Computing",
+        "66741": "Electrical Installation, Planning and Estimating",
+        "66742": "DC Machines",
+        "66743": "Electrical Engineering Materials",
+        "66751": "Generation of Electrical Power",
+        "66752": "Electrical & Electronic Measurements-I",
+        "66761": "Alternating Current Machines-I",
+        "66762": "Transmission and Distribution of Electrical Power-I",
+        "66763": "Switch Gear and Protection",
+        "66764": "Communication Engineering",
+        "66771": "Alternating Current Machines-II",
+        "66772": "Electrical Engineering Project",
+        "66773": "Transmission and Distribution of Electrical Power-II",
+        "66774": "Testing and Maintenance of Electrical Equipment",
+        "66775": "Instrumentation and Process Control",
+        "66842": "Digital Electronics",
+        "66851": "Television & Radio Engineering",
+        "66852": "Electronic Servicing",
+        "66856": "Industrial Electronics",
+        "66861": "Medical Electronics",
+        "66862": "Microcontroller & Embedded System",
+        "66863": "Microcontroller Application",
+        "66864": "Instrumentation and Process Control",
+        "66867": "Power Electronics",
+        "66868": "Control System & Robotics",
+        "66871": "Microwave & Radar",
+        "66873": "Optoelectronics & Fiber Optics",
+        "66874": "Biomedical Instrument",
+        "67041": "Engineering Mechanics",
+        "67045": "Basic Mechatronics",
+        "67051": "Hydraulics & Hydraulic Machineries",
+        "67055": "Metallurgy",
+        "67061": "Thermodynamics & Heat Engine",
+        "67062": "Mechanical Estimating & Costing",
+        "67063": "Plant Engineering & Maintenance",
+        "67064": "Advance Welding-II",
+        "67071": "Design of Machine Elements",
+        "67072": "Manufacturing Process",
+        "67073": "Tool Design",
+        "67076": "Production Planning & Control",
+        "67162": "Power Plant Engineering",
+        "68546": "Sequential Logic System",
+        "68873": "Construction Management & Documentation",
+        "69054": "Environmental Studies"
     };
 
-    async function initPDF() {
-        const banner = document.getElementById('statusBanner');
-        try {
-            pdfDoc = await pdfjsLib.getDocument(PDF_URL).promise;
-            banner.style.background = '#e8f5e9';
-            banner.style.color = '#0056b3';
-            banner.innerHTML = `✅ ২৮৩ পৃষ্ঠার রেজাল্ট ডাটাবেজ সংযুক্ত আছে!`;
-        } catch (err) {
-            banner.innerHTML = `⚠️ গিটহাবে <b>RESULT_7th_2016_Regulation.pdf</b> ফাইলটি আপলোড করুন। (ডেমো: 101882, 101171)`;
-        }
-    }
-    initPDF();
-
-    async function searchResult() {
-        const roll = document.getElementById("rollInput").value.trim();
-        const area = document.getElementById("resultArea");
-        const btn = document.getElementById("searchBtn");
-        
-        if (!roll || roll.length < 5) {
-            alert("দয়া করে সঠিক রোল নম্বর লিখুন!");
-            return;
-        }
-
-        let studentData = demoDatabase[roll];
-
-        if (!studentData && pdfDoc) {
-            btn.disabled = true;
-            for (let i = 1; i <= pdfDoc.numPages; i++) {
-                btn.innerText = `খোঁজা হচ্ছে... (${i}/${pdfDoc.numPages})`;
-                const page = await pdfDoc.getPage(i);
-                const textContent = await page.getTextContent();
-                const pageText = textContent.items.map(item => item.str).join(' ');
-
-                if (pageText.includes(roll)) {
-                    const regex = new RegExp(roll + "\\s*[\\(\\{]([^\\)\\}]+)[\\)\\}]");
-                    const match = pageText.match(regex);
-                    if (match) {
-                        const clean = match[1].replace(/\s+/g, ' ').trim();
-                        const gpa7 = (clean.match(/gpa7:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
-                        const gpa6 = (clean.match(/gpa6:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
-                        const gpa5 = (clean.match(/gpa5:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
-                        const gpa4 = (clean.match(/gpa4:\s*([0-9.]+|ref)/i) || [null, "-"])[1];
-                        
-                        let ref_sub = "";
-                        const refMatch = clean.match(/ref_sub:\s*([^})]+)/i);
-                        if (refMatch) ref_sub = refMatch[1].trim();
-                        else if (!clean.includes("gpa7")) ref_sub = clean.replace(/[{}()]/g, '').trim();
-
-                        studentData = { gpa7, gpa6, gpa5, gpa4, ref_sub };
-                        break;
-                    }
-                }
-            }
-            btn.disabled = false;
-            btn.innerText = "ফলাফল খুঁজুন";
-        }
-
-        area.style.display = "block";
-        document.getElementById("resRoll").innerText = `# ${roll}`;
-        const container = document.getElementById("semesterContainer");
-
-        if (studentData) {
-            let subjectsArr = studentData.ref_sub ? studentData.ref_sub.split(',') : [];
-            let backlogCount = subjectsArr.length;
-            
-            document.getElementById("alertBacklogBox").innerText = backlogCount > 0 ? `${backlogCount} subject(s) yet to pass` : `All subjects passed!`;
-
-            let html = "";
-            
-            // ৭ম পর্ব
-            html += renderSemesterBox("৭ম পর্ব (7th Semester)", studentData.gpa7, subjectsArr);
-            // ৬ষ্ঠ পর্ব
-            html += renderSemesterBox("৬ষ্ঠ পর্ব (6th Semester)", studentData.gpa6, []);
-            // ৫ম পর্ব
-            html += renderSemesterBox("৫ম পর্ব (5th Semester)", studentData.gpa5, []);
-            // ৪র্থ পর্ব
-            html += renderSemesterBox("৪র্থ পর্ব (4th Semester)", studentData.gpa4, []);
-
-            container.innerHTML = html;
-        } else {
-            container.innerHTML = `<div class="error-box">দুঃখিত! রোল <b>${roll}</b> এর কোনো ফলাফল পাওয়া যায়নি।</div>`;
-        }
-    }
-
-    function renderSemesterBox(semName, gpaVal, subs) {
-        const isPass = gpaVal !== "ref" && gpaVal !== "Failed" && gpaVal !== "-" && subs.length === 0;
-        
-        let subHtml = "";
-        if (subs.length > 0) {
-            subHtml = `<div class="subject-container">
-                <div class="date-label"><span>📅 10 November, 2026</span><span>Referred</span></div>`;
-            subs.forEach(sub => {
-                subHtml += `<div class="subject-item">${sub.trim()} <span class="tag">Theory</span></div>`;
-            });
-            subHtml += `</div>`;
-        }
-
-        return `
-            <div class="semester-card">
-                <div class="semester-header">
-                    <span class="semester-title">📚 ${semName}</span>
-                    <span class="${isPass ? 'badge-pass' : 'badge-fail'}">${isPass ? 'Passed' : subs.length + ' subject(s) ref'}</span>
-                </div>
-                ${isPass ? `
-                    <div class="gpa-passed-box">
-                        <div>
-                            <span>GPA OBTAINED</span>
-                            <strong>${gpaVal}</strong>
-                        </div>
-                        <div class="grade-badge">Passed</div>
-                    </div>
-                ` : subHtml}
-            </div>
-        `;
-    }
-</script>
-
-</body>
-</html>
+    // Built-in Preloaded Database from your PDF so common rolls work instantly
+    const preloadedDB = {
+        "101171": { inst: "11047 - Rainbow Polytechnic Institute, Panchagarh", gpa7: "ref", gpa6: "3.46", gpa5: "3.41", gpa4: "3.30", ref_sub: "66771(T), 66773(T)" },
+        "500897": { inst: "12053 - Thakurgaon Govt. Polytechnic Institute, Thakurgaon", gpa7: "ref", gpa6: "2.69", gpa5: "2.59", gpa4: "2.67", ref_sub: "65853(T)" },
+        "101454": { inst: "12053 - Thakurgaon Govt. Polytechnic Institute, Thakurgaon", gpa7: "ref", gpa6: "ref", gpa5: "ref", gpa4: "ref", ref_sub: "66945(T), 66962(T), 66963(T), 66971(T), 66972(T), 66973(T), 66975(T), 67045(T)" },
+        "101882": { inst: "12097 - Pirgonj Polytechnic Institute, Thakurgaon", gpa7: "3.27", gpa6: "3.51", gpa5: "3.11", gpa4: "3.09", ref_sub: "" },
+        "401223": { inst: "12100 - Life Line Polytechnic Institute, Thakurgaon", gpa7: "ref", gpa6: "2.93", gpa5: "3.07", gpa4: "2.97", ref_sub: "66771(T)" },
+        "501415": { inst: "12100 - Life Line Polytechnic Institute, Thakurgaon", gpa7: "ref", gpa6: "ref", gpa5: "ref", gpa4: "ref", ref_sub: "66631(T), 67051(T), 67055(T), 67061(T), 67064(T), 67071(T)" },
+        "501450": { inst: "12110 - Thakurgaon Polytechnic And Textile Institut
