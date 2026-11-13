@@ -412,12 +412,78 @@
             color: #1e3a8a;
         }
 
+        /* CGPA Calculator */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .calc-grid label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .calc-grid input {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 15px;
+            font-weight: 600;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            color: #0f172a;
+        }
+        .calc-grid input:focus {
+            border-color: #2563eb;
+        }
+
+        /* Printable Grade Sheet overlay */
+        .sheet-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            z-index: 200;
+            overflow-y: auto;
+            padding: 16px 12px;
+        }
+        .sheet-overlay.open {
+            display: block;
+        }
+        .sheet-card {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            padding: 20px 16px;
+            max-width: 520px;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
         @media print {
             .navbar, .search-box-card, .action-pills, .dev-top-badge {
                 display: none !important;
             }
             body { background: #fff; }
             #resultWrapper { box-shadow: none; border: none; }
+            .sheet-actions { display: none !important; }
+            body.printing-sheet .container, body.printing-sheet .navbar {
+                display: none !important;
+            }
+            body.printing-sheet .sheet-overlay {
+                position: static;
+                background: #fff;
+                padding: 0;
+                overflow: visible;
+            }
+            body.printing-sheet .sheet-card {
+                box-shadow: none;
+                border: none;
+                max-width: none;
+            }
         }
     </style>
 </head>
@@ -472,6 +538,7 @@
                 <button class="pill-btn" onclick="window.print()">⬇️ Download</button>
                 <button class="pill-btn" onclick="shareResult()">🔗 Share</button>
                 <button class="pill-btn" id="copyBtn" onclick="copyResult()">📋 Copy</button>
+                <button class="pill-btn" onclick="openGradeSheet()">📄 Grade Sheet</button>
             </div>
 
             <!-- Total Referred / Pass Status Box -->
@@ -483,10 +550,68 @@
             <div id="semestersList"></div>
         </div>
 
+        <!-- CGPA Calculator -->
+        <div class="sem-card" id="cgpaCalculator" style="margin-top: 14px;">
+            <div class="sem-card-header">
+                <div class="sem-name">🧮 CGPA Calculator</div>
+            </div>
+            <div class="sem-card-body">
+                <div class="exam-date-row"><span>Enter your semester GPAs (0 – 4.00). Leave blank for semesters not completed.</span></div>
+                <div class="calc-grid">
+                    <div><label>1st Semester</label><input type="number" class="calc-gpa" data-sem="1" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label>2nd Semester</label><input type="number" class="calc-gpa" data-sem="2" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label>3rd Semester</label><input type="number" class="calc-gpa" data-sem="3" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label>4th Semester</label><input type="number" class="calc-gpa" data-sem="4" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label>5th Semester</label><input type="number" class="calc-gpa" data-sem="5" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label>6th Semester</label><input type="number" class="calc-gpa" data-sem="6" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label>7th Semester</label><input type="number" class="calc-gpa" data-sem="7" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                    <div><label>8th Semester</label><input type="number" class="calc-gpa" data-sem="8" min="0" max="4" step="0.01" placeholder="e.g. 3.50"></div>
+                </div>
+                <div class="action-pills" style="margin: 0 0 12px;">
+                    <button class="pill-btn" onclick="calcCGPA()">🧮 Calculate CGPA</button>
+                    <button class="pill-btn" onclick="fillCalcFromSearch()">↩️ Use Searched Result</button>
+                    <button class="pill-btn" onclick="clearCalc()">✕ Clear</button>
+                </div>
+                <div id="calcResult" style="display:none"></div>
+            </div>
+        </div>
+
+        <!-- Grade Scale -->
+        <div class="sem-card" id="gradeScale" style="margin-top: 14px;">
+            <div class="sem-card-header">
+                <div class="sem-name">📊 Grade Scale</div>
+            </div>
+            <div class="sem-card-body">
+                <div class="ref-list-box">
+                    <div class="ref-item"><span class="sub-code">4.00</span><span class="sub-pill">A+</span></div>
+                    <div class="ref-item"><span class="sub-code">3.75 – 3.99</span><span class="sub-pill">A</span></div>
+                    <div class="ref-item"><span class="sub-code">3.50 – 3.74</span><span class="sub-pill">A-</span></div>
+                    <div class="ref-item"><span class="sub-code">3.25 – 3.49</span><span class="sub-pill">B+</span></div>
+                    <div class="ref-item"><span class="sub-code">3.00 – 3.24</span><span class="sub-pill">B</span></div>
+                    <div class="ref-item"><span class="sub-code">2.75 – 2.99</span><span class="sub-pill">B-</span></div>
+                    <div class="ref-item"><span class="sub-code">2.50 – 2.74</span><span class="sub-pill">C+</span></div>
+                    <div class="ref-item"><span class="sub-code">2.25 – 2.49</span><span class="sub-pill">C</span></div>
+                    <div class="ref-item"><span class="sub-code">2.00 – 2.24</span><span class="sub-pill">D</span></div>
+                    <div class="ref-item"><span class="sub-code">0.00 – 1.99</span><span class="sub-pill">F</span><span class="sub-pill">Fail</span></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer with Creator Name -->
         <div class="footer">
             <p>&copy; 2026 BTEB Results Zone | Bangladesh Technical Education Board</p>
             <div class="creator">Designed & Developed by MD ABU SUFIYAN</div>
+        </div>
+    </div>
+
+    <!-- Printable Grade Sheet (hidden until opened) -->
+    <div class="sheet-overlay" id="gradeSheetOverlay">
+        <div class="sheet-card">
+            <div id="gradeSheetContent"></div>
+            <div class="action-pills sheet-actions" style="margin-top: 16px;">
+                <button class="pill-btn" onclick="printGradeSheet()">🖨️ Print</button>
+                <button class="pill-btn" onclick="closeGradeSheet()">✕ Close</button>
+            </div>
         </div>
     </div>
 
@@ -897,6 +1022,101 @@
             fallbackCopy();
         }
     }
+
+    // ---------- CGPA Calculator ----------
+    function calcCGPA() {
+        const inputs = document.querySelectorAll(".calc-gpa");
+        const vals = [];
+        let bad = null;
+        inputs.forEach(function (inp) {
+            const v = inp.value.trim();
+            if (v === "") return;
+            const n = parseFloat(v);
+            if (isNaN(n) || n < 0 || n > 4) { bad = inp; return; }
+            vals.push(n);
+        });
+        if (bad) { alert("Please enter a valid GPA between 0 and 4.00."); bad.focus(); return; }
+        if (!vals.length) { alert("Please enter at least one semester GPA."); return; }
+        const cgpa = (vals.reduce(function (a, b) { return a + b; }, 0) / vals.length).toFixed(2);
+        const box = document.getElementById("calcResult");
+        box.style.display = "block";
+        box.innerHTML = '<div class="gpa-green-box"><div><div class="lbl">CGPA (' + vals.length + ' semester' + (vals.length > 1 ? 's' : '') + ')</div>'
+            + '<div class="grd">Grade: ' + gradeOf(cgpa) + '</div></div>'
+            + '<div class="val">' + cgpa + '</div></div>';
+    }
+    function fillCalcFromSearch() {
+        if (!currentResults.length) { alert("Please search a roll number first."); return; }
+        const gpas = currentResults[0].rec.gpas;
+        document.querySelectorAll(".calc-gpa").forEach(function (inp) {
+            const g = gpas[inp.getAttribute("data-sem")];
+            inp.value = (g && g !== "ref") ? g : "";
+        });
+        calcCGPA();
+    }
+    function clearCalc() {
+        document.querySelectorAll(".calc-gpa").forEach(function (inp) { inp.value = ""; });
+        const box = document.getElementById("calcResult");
+        box.style.display = "none";
+        box.innerHTML = "";
+    }
+
+    // ---------- Printable Grade Sheet ----------
+    function openGradeSheet() {
+        if (!currentResults.length) { alert("Please search a roll number first."); return; }
+        const cr = currentResults[0];
+        const rec = cr.rec;
+        const cg = computeCGPA(rec);
+        const isExpelledRec = rec.expelled.length > 0 || (rec.note && rec.note.indexOf("Expelled") === 0);
+        const sems = Object.keys(rec.gpas).map(Number).sort(function (a, b) { return a - b; });
+        if (!sems.length) sems.push(rec.sem);
+        let rows = "";
+        sems.forEach(function (s) {
+            const g = rec.gpas[s];
+            const isCgpaOnly = (s === rec.sem && !g && rec.cgpa && !rec.ref_sub.length && !rec.failed.length && !rec.expelled.length);
+            let valTxt, gradeTxt, status;
+            if (g && g !== "ref") {
+                valTxt = "GPA " + g; gradeTxt = gradeOf(g); status = "Passed";
+            } else if (isCgpaOnly) {
+                valTxt = "CGPA " + rec.cgpa; gradeTxt = gradeOf(rec.cgpa); status = "Passed";
+            } else if (s === rec.sem && rec.failed.length) {
+                valTxt = "—"; gradeTxt = ""; status = "Failed";
+            } else if (s === rec.sem && isExpelledRec) {
+                valTxt = "—"; gradeTxt = ""; status = "Expelled";
+            } else {
+                valTxt = "—"; gradeTxt = ""; status = "Referred";
+            }
+            rows += '<div class="ref-item"><span class="sub-code">' + semLabel(s) + '</span>'
+                + '<span>' + valTxt + '</span>'
+                + (gradeTxt ? '<span class="sub-pill">' + gradeTxt + '</span>' : '')
+                + '<span class="sub-pill">' + status + '</span></div>';
+        });
+        let subs = "";
+        if (rec.ref_sub.length || rec.failed.length || rec.expelled.length) {
+            subs = '<div style="height:10px"></div><div class="ref-list-box">';
+            rec.ref_sub.forEach(function (c) { subs += refItemHTML(c, "Referred"); });
+            rec.failed.forEach(function (c) { subs += refItemHTML(c, "Failed"); });
+            rec.expelled.forEach(function (c) { subs += refItemHTML(c + "(T)", "Expelled"); });
+            subs += '</div>';
+        }
+        document.getElementById("gradeSheetContent").innerHTML =
+            '<div class="student-header"><div class="roll-title">Grade Sheet</div>'
+            + '<div class="meta-line"><span># ' + cr.roll + '</span></div>'
+            + '<div class="inst-line">🏛️ ' + esc(rec.inst) + '</div>'
+            + '<div class="meta-line"><span>📖 ' + esc(rec.prog) + '</span><span>📅 Regulation ' + esc(rec.reg) + '</span></div></div>'
+            + '<div class="ref-list-box">' + rows + '</div>' + subs
+            + (cg.value ? '<div style="height:12px"></div><div class="gpa-green-box"><div><div class="lbl">CGPA' + (cg.official ? ' (as published by BTEB)' : ' (average of passed semesters)') + '</div><div class="grd">Grade: ' + gradeOf(cg.value) + '</div></div><div class="val">' + cg.value + '</div></div>' : '')
+            + (rec.note ? '<div style="height:10px"></div><div class="ref-list-box"><div class="ref-item"><span class="sub-title">⚠️ ' + esc(rec.note) + '</span></div></div>' : '');
+        document.getElementById("gradeSheetOverlay").classList.add("open");
+    }
+    function closeGradeSheet() {
+        document.getElementById("gradeSheetOverlay").classList.remove("open");
+        document.body.classList.remove("printing-sheet");
+    }
+    function printGradeSheet() {
+        document.body.classList.add("printing-sheet");
+        window.print();
+    }
+    window.addEventListener("afterprint", function () { document.body.classList.remove("printing-sheet"); });
 
     // ---------- Optional: search inside a user-uploaded PDF (Select PDF button) ----------
     function parsePdfTextForRoll(fullText, roll) {

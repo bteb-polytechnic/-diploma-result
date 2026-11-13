@@ -68,6 +68,12 @@ hishebe ache, chaile jekono hosting e ek file hishebe use kora jabe.
 | 302428 | Dropped out (6 ta subject) |
 | 202030 | Expelled |
 
+## CGPA Calculator, Grade Scale ar Grade Sheet
+
+- **🧮 CGPA Calculator** — result er niche ache. 8 ta semester er GPA likhe Calculate chaple CGPA + Grade dekhabe. Khali rakha semester count hobe na. "Use Searched Result" chaple search kora roll er GPA gulo auto fill hoye jabe.
+- **📊 Grade Scale** — calculator er niche GPA theke Grade er table ache (4.00 = A+, 3.75 = A, 3.50 = A-, 3.25 = B+, 3.00 = B, 2.75 = B-, 2.50 = C+, 2.25 = C, 2.00 = D, 1.99 er niche = F).
+- **📄 Grade Sheet** — result card er button gulo te ache. Chaple search kora roll er grade sheet khulbe (shob semester er GPA + Grade + status, referred/failed subject, CGPA). Print button diye sudhu grade sheet tai print kora jabe.
+
 ## Copy button
 
 Result card e Share er pashe **📋 Copy** button ache — chap dilei puro result (roll,
