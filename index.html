@@ -36,7 +36,6 @@
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
     <style>
         * {
@@ -134,16 +133,6 @@
             background: #f0fdf4;
             border-color: #bbf7d0;
             color: #166534;
-        }
-        .file-upload-btn {
-            background: #e2e8f0;
-            color: #1e293b;
-            padding: 4px 8px;
-            border-radius: 5px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
         }
         .search-input-group {
             display: flex;
@@ -533,10 +522,6 @@
         <div class="search-box-card">
             <div id="statusBar" class="status-bar">
                 <span id="statusText">⏳ Loading 1,60,657 results...</span>
-                <label class="file-upload-btn">
-                    📂 Select PDF
-                    <input type="file" id="pdfUpload" accept="application/pdf" style="display:none" onchange="loadLocalPDF(event)">
-                </label>
             </div>
             <div class="search-input-group">
                 <input type="number" id="rollInput" placeholder="Enter Roll No (e.g. 700014, 800377)" onkeypress="if(event.key==='Enter') searchRoll()">
@@ -648,7 +633,6 @@
 <script src="data-6.js"></script>
 <script src="data-7.js"></script>
 <script>
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
     // BTEB 2016 Regulation Subject Code Dictionary
     const subjectNames = {
@@ -746,7 +730,6 @@
     const EXAM_LABEL = "Aug-Sep 2026";
 
     let currentResults = []; // [{roll, rec}] currently displayed
-    let uploadedPdfText = null; // text of a user-uploaded PDF (Select PDF button)
 
     function semLabel(sem) {
         return sem === 8 ? "8th Semester (Irregular)" : ORDINAL[sem] + " Semester";
@@ -932,10 +915,6 @@
         if (!roll) { alert("Please enter a roll number."); return; }
         const recs = lookupRoll(roll);
         if (recs.length) { showResults(roll, recs); return; }
-        if (uploadedPdfText) {
-            const found = searchUploadedPDF(roll);
-            if (found) { showResults(roll, [found]); return; }
-        }
         document.getElementById("resultWrapper").style.display = "none";
         document.querySelectorAll(".extra-result-wrapper").forEach(function (el) { el.remove(); });
         alert("Roll " + roll + " not found in the updated results (Exam Aug-Sep 2026, published 10 Nov 2026).\nPlease check the roll number and try again.");
@@ -1142,87 +1121,6 @@
         window.print();
     }
     window.addEventListener("afterprint", function () { document.body.classList.remove("printing-sheet"); });
-
-    // ---------- Optional: search inside a user-uploaded PDF (Select PDF button) ----------
-    function parsePdfTextForRoll(fullText, roll) {
-        // find the roll entry: "ROLL ( ... )", "ROLL { ... }" or "ROLL cgpa: X.XX ( ... )"
-        const idx = fullText.search(new RegExp("(^|\\n)\\s*" + roll + "\\s+(\\(|\\{|cgpa)", "m"));
-        if (idx === -1) return null;
-        let start = fullText.indexOf(roll, idx);
-        let rest = fullText.slice(start + roll.length);
-        const isBrace = rest.trim().startsWith("{");
-        const closer = isBrace ? "}" : ")";
-        let depth = 0, end = -1;
-        const openCh = isBrace ? "{" : "(";
-        for (let i = 0; i < rest.length && i < 2000; i++) {
-            if (rest[i] === openCh) depth++;
-            else if (rest[i] === closer) { depth--; if (depth === 0) { end = i; break; } }
-        }
-        if (end === -1) return null;
-        const buf = rest.slice(0, end + 1).replace(/\s+/g, " ");
-        const gpas = {};
-        const gpaRe = /gpa(\d)\s*:\s*(ref|\d\.\d{1,2})/g;
-        let m;
-        while ((m = gpaRe.exec(buf))) gpas[parseInt(m[1], 10)] = m[2];
-        const cg = buf.match(/cgpa\s*:\s*(\d\.\d{1,2})/) || buf.match(/CGPA-(\d\.\d{1,2})/);
-        const ref_sub = [], failed = [];
-        const rsIdx = buf.indexOf("ref_sub:");
-        const subRe = /(\d{4,5})\s*\((T,P|P,T|T|P)\)/g;
-        if (rsIdx !== -1) {
-            const sub = buf.slice(rsIdx);
-            while ((m = subRe.exec(sub))) ref_sub.push(m[1] + "(" + m[2] + ")");
-        } else if (isBrace && !Object.keys(gpas).length) {
-            while ((m = subRe.exec(buf))) failed.push(m[1] + "(" + m[2] + ")");
-        }
-        if (!Object.keys(gpas).length && !cg && !ref_sub.length && !failed.length) {
-            const mm = buf.match(/\(\s*(\d\.\d{1,2})\s*\)/);
-            if (mm) gpas[3] = mm[1]; // marine-style single GPA fallback
-            else return null;
-        }
-        // nearest institute header above the roll
-        const before = fullText.slice(0, start);
-        const instMatches = before.match(/(\d{5,6}\s*-\s*[^\n]{3,80})/g);
-        const inst = instMatches ? instMatches[instMatches.length - 1].trim() : "";
-        // semester / regulation / program from the document text
-        const semM = fullText.match(/(\d)(?:st|nd|rd|th)\s+Semester[^(\n]*\((\d{4})\s+Regulation\)/);
-        const sem = semM ? parseInt(semM[1], 10) : (Math.max.apply(null, Object.keys(gpas).map(Number)) || 3);
-        const reg = semM ? semM[2] : "2022";
-        const prog = /MARINE TRADE/i.test(fullText) ? "Certificate in Marine Trade"
-            : (/TOURISM/i.test(fullText) ? "Diploma in Tourism and Hospitality" : "Diploma in Engineering");
-        return { inst: inst, sem: sem, reg: reg, prog: prog, gpas: gpas,
-                 cgpa: cg ? cg[1] : null, ref_sub: ref_sub, failed: failed,
-                 expelled: [], note: null };
-    }
-
-    function searchUploadedPDF(roll) {
-        if (!uploadedPdfText) return null;
-        return parsePdfTextForRoll(uploadedPdfText, roll);
-    }
-
-    async function loadLocalPDF(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const statusText = document.getElementById("statusText");
-        const statusBar = document.getElementById("statusBar");
-        statusText.textContent = "⏳ Reading " + file.name + "...";
-        statusBar.classList.remove("loaded");
-        try {
-            const buf = await file.arrayBuffer();
-            const doc = await pdfjsLib.getDocument({ data: buf }).promise;
-            let fullText = "";
-            for (let p = 1; p <= doc.numPages; p++) {
-                const page = await doc.getPage(p);
-                const tc = await page.getTextContent();
-                fullText += "\n" + tc.items.map(function (it) { return it.str; }).join("\n");
-                if (p % 100 === 0) statusText.textContent = "⏳ Reading " + file.name + " (" + p + "/" + doc.numPages + " pages)...";
-            }
-            uploadedPdfText = fullText;
-            statusText.textContent = "✅ " + file.name + " loaded (" + doc.numPages + " pages) — search any roll from it.";
-            statusBar.classList.add("loaded");
-        } catch (e) {
-            statusText.textContent = "⚠️ Could not read this PDF. Try another file.";
-        }
-    }
 
     // ---------- Init: results are embedded, no PDF download needed ----------
     (function init() {
