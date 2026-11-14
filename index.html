@@ -611,6 +611,14 @@
         .subj-row-top { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 4px; }
         .subj-row-top .subj-count { color: #1e3a8a; font-weight: 700; flex-shrink: 0; }
 
+        /* Tab bar for tool sections */
+        .tab-bar { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 2px; margin-top: 14px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .tab-bar::-webkit-scrollbar { display: none; }
+        .tab-btn { flex-shrink: 0; padding: 9px 14px; font-size: 13.5px; font-weight: 700; color: #1e3a8a; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+        .tab-btn.active { background: #1e3a8a; color: #ffffff; border-color: #1e3a8a; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
         /* Institute search */
         .inst-select {
             flex: 1;
@@ -760,6 +768,8 @@
         body.dark .stat-bar-fill { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
         body.dark .subj-row-top { color: #cbd5e1; }
         body.dark .subj-row-top .subj-count { color: #93c5fd; }
+        body.dark .tab-btn { background: #1e293b; color: #bfdbfe; border-color: #334155; }
+        body.dark .tab-btn.active { background: #2563eb; color: #ffffff; border-color: #2563eb; }
         body.dark .inst-row:hover { background: #0f172a; }
         body.dark .sheet-overlay { background: rgba(0, 0, 0, 0.7); }
 
@@ -861,8 +871,18 @@
             <div id="semestersList"></div>
         </div>
 
+        <!-- Tab bar for tool sections -->
+        <div class="tab-bar" id="tabBar">
+            <button class="tab-btn active" data-tab="calc" onclick="showTab('calc')" data-i18n="tabCalc">🧮 Calculator</button>
+            <button class="tab-btn" data-tab="scale" onclick="showTab('scale')" data-i18n="tabScale">📊 Grade Scale</button>
+            <button class="tab-btn" data-tab="stats" onclick="showTab('stats')" data-i18n="tabStats">📈 Statistics</button>
+            <button class="tab-btn" data-tab="subj" onclick="showTab('subj')" data-i18n="tabSubj">📚 Subjects</button>
+            <button class="tab-btn" data-tab="top" onclick="showTab('top')" data-i18n="tabTop">🏆 Toppers</button>
+            <button class="tab-btn" data-tab="inst" onclick="showTab('inst')" data-i18n="tabInst">🏫 Institute</button>
+        </div>
+
         <!-- CGPA Calculator -->
-        <div class="sem-card" id="cgpaCalculator" style="margin-top: 14px;">
+        <div class="sem-card tab-panel" id="cgpaCalculator" style="margin-top: 14px;">
             <div class="sem-card-header">
                 <div class="sem-name" data-i18n="calcTitle">🧮 CGPA Calculator</div>
             </div>
@@ -888,7 +908,7 @@
         </div>
 
         <!-- Grade Scale -->
-        <div class="sem-card" id="gradeScale" style="margin-top: 14px;">
+        <div class="sem-card tab-panel" id="gradeScale" style="margin-top: 14px;">
             <div class="sem-card-header">
                 <div class="sem-name" data-i18n="scaleTitle">📊 Grade Scale</div>
             </div>
@@ -909,7 +929,7 @@
         </div>
 
         <!-- Result Statistics -->
-        <div class="sem-card" id="statsSection" style="margin-top: 14px;">
+        <div class="sem-card tab-panel" id="statsSection" style="margin-top: 14px;">
             <div class="sem-card-header">
                 <div class="sem-name" data-i18n="statsTitle">📊 Result Statistics</div>
             </div>
@@ -919,7 +939,7 @@
         </div>
 
         <!-- Subject Analysis -->
-        <div class="sem-card" id="subjSection" style="margin-top: 14px;">
+        <div class="sem-card tab-panel" id="subjSection" style="margin-top: 14px;">
             <div class="sem-card-header">
                 <div class="sem-name" data-i18n="subjTitle">📚 Subject Analysis</div>
             </div>
@@ -929,7 +949,7 @@
         </div>
 
         <!-- Topper List -->
-        <div class="sem-card" id="topSection" style="margin-top: 14px;">
+        <div class="sem-card tab-panel" id="topSection" style="margin-top: 14px;">
             <div class="sem-card-header">
                 <div class="sem-name" data-i18n="topTitle">🏆 Topper List</div>
             </div>
@@ -939,7 +959,7 @@
         </div>
 
         <!-- Institute Results -->
-        <div class="sem-card" id="instSection" style="margin-top: 14px;">
+        <div class="sem-card tab-panel" id="instSection" style="margin-top: 14px;">
             <div class="sem-card-header">
                 <div class="sem-name" data-i18n="instTitle">🏫 Institute Results</div>
             </div>
@@ -1773,6 +1793,12 @@
             topTitle: "🏆 Topper List",
             topNote: "8th Semester — CGPA is the average of semester GPAs (6 or more semesters)",
             topCgpa: "CGPA",
+            tabCalc: "🧮 Calculator",
+            tabScale: "📊 Grade Scale",
+            tabStats: "📈 Statistics",
+            tabSubj: "📚 Subjects",
+            tabTop: "🏆 Toppers",
+            tabInst: "🏫 Institute",
             instTitle: "🏫 Institute Results",
             instPlaceholder: "Type institute name...",
             instAllSem: "All Semesters",
@@ -1847,6 +1873,12 @@
             topTitle: "🏆 টপার তালিকা",
             topNote: "৮ম সেমিস্টার — সিজিপিএ হলো সেমিস্টার GPA-র গড় (৬ বা তার বেশি সেমিস্টার)",
             topCgpa: "সিজিপিএ",
+            tabCalc: "🧮 ক্যালকুলেটর",
+            tabScale: "📊 গ্রেড স্কেল",
+            tabStats: "📈 পরিসংখ্যান",
+            tabSubj: "📚 বিষয়",
+            tabTop: "🏆 টপার",
+            tabInst: "🏫 ইনস্টিটিউট",
             instTitle: "🏫 ইনস্টিটিউটের রেজাল্ট",
             instPlaceholder: "ইনস্টিটিউটের নাম লিখুন...",
             instAllSem: "সব সেমিস্টার",
@@ -2738,6 +2770,20 @@
         if (btn) btn.style.display = "none";
     });
 
+    // ---------- Tab bar for tool sections ----------
+    const TABS = { calc: "cgpaCalculator", scale: "gradeScale", stats: "statsSection", subj: "subjSection", top: "topSection", inst: "instSection" };
+    function showTab(name) {
+        if (!TABS[name]) name = "calc";
+        Object.keys(TABS).forEach(function (k) {
+            const el = document.getElementById(TABS[k]);
+            if (el) el.classList.toggle("active", k === name);
+        });
+        document.querySelectorAll("#tabBar .tab-btn").forEach(function (b) {
+            b.classList.toggle("active", b.getAttribute("data-tab") === name);
+        });
+        storeSet("bteb_tab", name);
+    }
+
     // ---------- Init: results are embedded, no PDF download needed ----------
     (function init() {
         const savedDark = storeGet("bteb_dark");
@@ -2752,6 +2798,7 @@
         renderSubjAnalysis();
         renderToppers();
         populateInstList();
+        showTab(storeGet("bteb_tab") || "calc");
         registerSW();
     })();
 
