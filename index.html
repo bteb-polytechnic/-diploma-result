@@ -606,6 +606,11 @@
             color: #1e293b;
         }
 
+        /* Subject analysis */
+        .subj-row { margin-bottom: 10px; }
+        .subj-row-top { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 4px; }
+        .subj-row-top .subj-count { color: #1e3a8a; font-weight: 700; flex-shrink: 0; }
+
         /* Institute search */
         .inst-select {
             flex: 1;
@@ -753,6 +758,8 @@
         body.dark .stat-box.blue .stat-num { color: #60a5fa; }
         body.dark .stat-bar-track { background: #334155; }
         body.dark .stat-bar-fill { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        body.dark .subj-row-top { color: #cbd5e1; }
+        body.dark .subj-row-top .subj-count { color: #93c5fd; }
         body.dark .inst-row:hover { background: #0f172a; }
         body.dark .sheet-overlay { background: rgba(0, 0, 0, 0.7); }
 
@@ -908,6 +915,26 @@
             </div>
             <div class="sem-card-body">
                 <div id="statsContent"></div>
+            </div>
+        </div>
+
+        <!-- Subject Analysis -->
+        <div class="sem-card" id="subjSection" style="margin-top: 14px;">
+            <div class="sem-card-header">
+                <div class="sem-name" data-i18n="subjTitle">📚 Subject Analysis</div>
+            </div>
+            <div class="sem-card-body">
+                <div id="subjContent"></div>
+            </div>
+        </div>
+
+        <!-- Topper List -->
+        <div class="sem-card" id="topSection" style="margin-top: 14px;">
+            <div class="sem-card-header">
+                <div class="sem-name" data-i18n="topTitle">🏆 Topper List</div>
+            </div>
+            <div class="sem-card-body">
+                <div id="topContent"></div>
             </div>
         </div>
 
@@ -1740,6 +1767,12 @@
             statsExpelled: "Expelled",
             statsPassRate: "Pass Rate",
             statsBySem: "By Semester",
+            subjTitle: "📚 Subject Analysis",
+            subjNote: "Most referred subjects — by number of students",
+            subjTotal: "{total} referred/failed entries across {codes} subjects",
+            topTitle: "🏆 Topper List",
+            topNote: "8th Semester — CGPA is the average of semester GPAs (6 or more semesters)",
+            topCgpa: "CGPA",
             instTitle: "🏫 Institute Results",
             instPlaceholder: "Type institute name...",
             instAllSem: "All Semesters",
@@ -1808,6 +1841,12 @@
             statsExpelled: "বহিষ্কার",
             statsPassRate: "পাসের হার",
             statsBySem: "সেমিস্টার অনুযায়ী",
+            subjTitle: "📚 বিষয় বিশ্লেষণ",
+            subjNote: "সবচেয়ে বেশি রেফার্ড বিষয় — শিক্ষার্থীর সংখ্যা অনুযায়ী",
+            subjTotal: "{codes}টি বিষয়ে মোট {total}টি রেফার্ড/ফেল এন্ট্রি",
+            topTitle: "🏆 টপার তালিকা",
+            topNote: "৮ম সেমিস্টার — সিজিপিএ হলো সেমিস্টার GPA-র গড় (৬ বা তার বেশি সেমিস্টার)",
+            topCgpa: "সিজিপিএ",
             instTitle: "🏫 ইনস্টিটিউটের রেজাল্ট",
             instPlaceholder: "ইনস্টিটিউটের নাম লিখুন...",
             instAllSem: "সব সেমিস্টার",
@@ -1878,6 +1917,8 @@
         updateStatusText();
         renderRecent();
         if (document.getElementById("statsContent") && document.getElementById("statsContent").innerHTML) renderStats();
+        if (document.getElementById("subjContent") && document.getElementById("subjContent").innerHTML) renderSubjAnalysis();
+        if (document.getElementById("topContent") && document.getElementById("topContent").innerHTML) renderToppers();
         if (lastInstQuery) instSearch();
         const cb = document.getElementById("calcResult");
         if (cb && cb.style.display === "block") calcCGPA();
@@ -2382,6 +2423,72 @@
         box.innerHTML = html;
     }
 
+    // ---------- Subject analysis + Topper list (one shared pass over the DB) ----------
+    let INSIGHTS = null;
+    function computeInsights() {
+        if (INSIGHTS) return INSIGHTS;
+        const subjCounts = {};
+        let subjTotal = 0;
+        const toppers = [];
+        eachRecord(function (roll, a) {
+            [a[6], a[7]].forEach(function (csv) {
+                if (!csv) return;
+                csv.split(";").forEach(function (c) {
+                    if (!c) return;
+                    const code = subjectCodeOf(c);
+                    subjCounts[code] = (subjCounts[code] || 0) + 1;
+                    subjTotal++;
+                });
+            });
+            if (a[1] === 8 && a[4]) {
+                let sum = 0, n = 0;
+                a[4].split(",").forEach(function (v) {
+                    const g = parseFloat(v);
+                    if (!isNaN(g)) { sum += g; n++; }
+                });
+                if (n >= 6) toppers.push({ roll: roll, inst: INSTITUTES[a[0]] || "", cgpa: Math.round(sum / n * 100) / 100, n: n });
+            }
+        });
+        const topSubj = Object.keys(subjCounts).map(function (code) {
+            return { code: code, name: subjectNames[code] || "", count: subjCounts[code] };
+        }).sort(function (x, y) { return y.count - x.count || (parseInt(x.code, 10) - parseInt(y.code, 10)); }).slice(0, 10);
+        toppers.sort(function (x, y) { return y.cgpa - x.cgpa || (parseInt(x.roll, 10) - parseInt(y.roll, 10)); });
+        INSIGHTS = { topSubj: topSubj, subjTotal: subjTotal, subjCodes: Object.keys(subjCounts).length, toppers: toppers.slice(0, 10) };
+        return INSIGHTS;
+    }
+    function renderSubjAnalysis() {
+        const box = document.getElementById("subjContent");
+        if (!box) return;
+        const d = computeInsights();
+        const fmt = function (n) { return n.toLocaleString("en-IN"); };
+        const max = d.topSubj.length ? d.topSubj[0].count : 1;
+        let html = '<div class="inst-note" style="margin-bottom: 10px;">' + t("subjNote") + ' — ' + t("subjTotal", { total: fmt(d.subjTotal), codes: fmt(d.subjCodes) }) + '</div>';
+        d.topSubj.forEach(function (s) {
+            const label = s.name ? s.code + " — " + s.name : s.code;
+            const w = Math.max(2, Math.round(s.count / max * 100));
+            html += '<div class="subj-row"><div class="subj-row-top"><span>' + esc(label) + '</span><span class="subj-count">' + fmt(s.count) + '</span></div>'
+                + '<div class="stat-bar-track"><div class="stat-bar-fill" style="width:' + w + '%"></div></div></div>';
+        });
+        box.innerHTML = html;
+    }
+    function renderToppers() {
+        const box = document.getElementById("topContent");
+        if (!box) return;
+        const d = computeInsights();
+        const medals = ["🥇", "🥈", "🥉"];
+        let html = '<div class="inst-note" style="margin-bottom: 8px;">' + t("topNote") + '</div><div class="ref-list-box">';
+        d.toppers.forEach(function (tp, i) {
+            const rank = medals[i] || ((i + 1) + ".");
+            html += '<div class="ref-item inst-row" onclick="searchRollFor(\'' + esc(tp.roll) + '\')">'
+                + '<span>' + rank + '</span>'
+                + '<span class="sub-code">#' + esc(tp.roll) + '</span>'
+                + '<span>' + esc(tp.inst) + '</span>'
+                + '<span class="sub-pill">' + t("topCgpa") + ' ' + tp.cgpa.toFixed(2) + '</span></div>';
+        });
+        html += '</div>';
+        box.innerHTML = html;
+    }
+
     // ---------- Institute-wise results ----------
     let lastInstQuery = null;
     function populateInstList() {
@@ -2642,6 +2749,8 @@
         document.getElementById("statusBar").classList.add("loaded");
         renderRecent();
         renderStats();
+        renderSubjAnalysis();
+        renderToppers();
         populateInstList();
         registerSW();
     })();

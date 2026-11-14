@@ -95,3 +95,5 @@ er ar dorkar nei. Button, file input, pdf.js library ar upload er code shob sora
 - **🖼️ Share Image** — result card e Share Image button: roll er result er sundor ekta chobi (PNG) baniye share ba download kora jabe — Facebook/WhatsApp e deoar jonno.
 - **📱 PWA (Installable App)** — phone er browser theke "Install" korle site ta app er moto home screen e bosbe, app er moto khulbe. Offline eo ager dekha page cholbe (service worker).
 - **📖 Subject Names** — referred/failed subject er code er pashe ekhon subject er nam o dekhabe (jemon 25911 — Mathematics-I). Mot 724 ta subject er nam ache — 2016 o 2022 regulation, Marine Trade ar Tourism soho. Ager list er 48 ta bhul nam o thik kora hoyeche (jemon 67064 ekhon shothikbhabe 'Strength of Materials').
+- **📚 Subject Analysis** — kon subject-e shobche beshi referred hoy, tar top 10 list bar chart soho (Mathematics-II shobche beshi — 41,484 jon; mot 4,81,345 ta referred/failed entry, 667 ta subject).
+- **🏆 Topper List** — 8th semester er top 10 CGPA-r talika (CGPA = semester GPA-r gor, 6 ba tar beshi semester thaka student ra; top CGPA 3.81). Row te tap korle oi roll er result khulbe.
